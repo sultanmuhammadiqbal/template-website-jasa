@@ -1,0 +1,57 @@
+import assert from 'node:assert/strict';
+import { readFile, mkdir } from 'node:fs/promises';
+import { chromium } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+
+const html = await readFile(new URL('../dist/case-study/index.html', import.meta.url),'utf8');
+const css = await readFile(new URL('../dist/case-study/case-study.css', import.meta.url),'utf8');
+assert.match(html,/name="robots" content="noindex,nofollow"/);
+assert.match(html,/AI sebagai/);
+assert.match(html,/hak aset/);
+assert.match(html,/belum disetujui untuk dijual/);
+assert.match(html,/bukan screenshot aktual/);
+assert.match(html,/42302718353/);
+assert.match(html,/MANIFEST/);
+assert.ok(css.includes('@media'));
+for(let n=1;n<=7;n++){
+  const link='https://github.com/sultanmuhammadiqbal/template-website-jasa/pull/'+n;
+  assert.ok(html.includes(link),'Missing historical evidence link for PR #'+n);
+}
+assert.equal((html.match(/class="milestone"/g)||[]).length,7);
+assert.equal((html.match(/<h1\b/g)||[]).length,1);
+const browser=await chromium.launch({headless:true});
+await mkdir(new URL('../artifacts/screenshots/',import.meta.url),{recursive:true});
+try{
+  for(const width of [320,375,768,1280]){
+    const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
+    const page=await context.newPage();
+    const errors=[];
+    page.on('pageerror',e=>errors.push(e.message));
+    const response=await page.goto('http://127.0.0.1:4173/case-study/',{waitUntil:'load'});
+    assert.equal(response.status(),200);
+    assert.equal(await page.title(),'Ruang Reka — Product Engineering Case Study');
+    assert.equal(await page.locator('.milestone').count(),7);
+    assert.equal(await page.locator('h1').count(),1);
+    const metrics=await page.evaluate(()=>({
+      overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+      width:document.documentElement.clientWidth,
+      brokenLinks:[...document.querySelectorAll('a[href^="#"]')].filter(a=>!document.querySelector(a.getAttribute('href'))).map(a=>a.getAttribute('href')),
+      loadedStyle:getComputedStyle(document.querySelector('.hero')).display,
+      visibleHeading:document.querySelector('#hero-title').getBoundingClientRect().width>0
+    }));
+    assert.ok(metrics.overflow<=2,'Horizontal overflow at '+width+': '+JSON.stringify(metrics));
+    assert.deepEqual(metrics.brokenLinks,[],'Broken in-page anchors');
+    assert.equal(metrics.loadedStyle,'grid');
+    assert.equal(metrics.visibleHeading,true);
+    assert.deepEqual(errors,[]);
+    const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+    assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[],'Case study axe violations at '+width);
+    if(width===375 || width===1280){
+      await page.screenshot({path:new URL('../artifacts/screenshots/case-study-'+width+'.png',import.meta.url).pathname,fullPage:true,animations:'disabled'});
+    }
+    await page.getByRole('link',{name:'Proses',exact:true}).click();
+    assert.equal(new URL(page.url()).hash,'#approach');
+    console.log('PASS case study '+width+'px: anchors, evidence, layout, script-free, axe WCAG 0');
+    await context.close();
+  }
+}finally{await browser.close();}
