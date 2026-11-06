@@ -24,7 +24,6 @@ jobs:
           node --check scripts/test-stage2.mjs
           node --check scripts/test-browser.mjs
           node --check scripts/test-stage3-browser.mjs
-          node --check config/contact.js
           node --check scripts/build-site.mjs
           node --check scripts/test-production.mjs
           node --check scripts/audit-browser.mjs
@@ -37,6 +36,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Build demo distribution
         run: npm run build
+      - name: Validate generated contact configuration
+        run: node --check dist/config/contact.js
       - name: Browser responsive and accessibility tests
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/ruang-reka-server.log 2>&1 &
