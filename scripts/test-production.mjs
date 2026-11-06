@@ -26,6 +26,8 @@ const contactRuntime = await readFile(new URL('../dist/config/contact.js', impor
 const siteConfig = JSON.parse(await readFile(new URL('../config/site.json', import.meta.url), 'utf8'));
 assert.ok(contactRuntime.includes(JSON.stringify(siteConfig.contact.whatsapp)));
 assert.ok(contactRuntime.includes(JSON.stringify(siteConfig.contact.email)));
+assert.ok(contactRuntime.includes(JSON.stringify(siteConfig.labels.contactActiveNote)));
+assert.ok(contactRuntime.includes(JSON.stringify(siteConfig.labels.contactInactiveNote)));
 const favicon = await readFile(new URL('../dist/assets/favicon.svg', import.meta.url), 'utf8');
 assert.ok(favicon.includes(siteConfig.brand.mark));
 assert.ok(favicon.includes(siteConfig.theme.accent));
