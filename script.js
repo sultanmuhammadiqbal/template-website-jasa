@@ -104,10 +104,10 @@ if (document.querySelector('[data-contact-status]')) {
   }
   if (validWhatsApp || validEmail) {
     contactUnavailable.hidden = true;
-    contactStatus.textContent = 'Gunakan kontak yang tersedia untuk memulai percakapan.';
-    if (contactDemo) contactDemo.textContent = 'Saluran kontak aktif — identitas dan isi website tetap berupa demo.';
+    contactStatus.textContent = contact.labels?.activeNote || 'Gunakan kontak yang tersedia untuk memulai percakapan.';
+    if (contactDemo) contactDemo.textContent = contact.labels?.activeDemo || 'Saluran kontak aktif — identitas dan isi website tetap berupa demo.';
   } else {
-    contactStatus.textContent = 'Kontak belum diaktifkan. Atur kontak di config/site.json menggunakan data bisnis yang valid.';
+    contactStatus.textContent = contact.labels?.inactiveNote || 'Kontak belum diaktifkan. Atur kontak di config/site.json menggunakan data bisnis yang valid.';
   }
 
 }
