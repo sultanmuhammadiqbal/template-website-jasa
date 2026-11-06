@@ -20,6 +20,7 @@ EXACT = [
     "scripts/check-site.mjs", "scripts/test-menu.mjs",
     "scripts/test-stage2.mjs", "scripts/test-production.mjs",
     "scripts/test-template.mjs",
+    "scripts/package-template.py", "scripts/test-package.py",
     "examples/studio-arunika.site.json",
     "buyer/README-PEMBELI.md", "buyer/RENCANA-PENJUALAN.md", "buyer/LICENSE-DRAFT.md",
     "buyer/CHECKLIST-LAUNCH.md", "buyer/CONTENT-RIGHTS.md",
