@@ -32,6 +32,14 @@ npm test
 3. **FAQ dan kontak**: FAQ interaktif, CTA kontak lengkap, serta konfigurasi tautan WhatsApp/email.
 4. **Polish dan audit**: metadata sosial, optimasi aset, audit aksesibilitas dan performa, serta pengujian lintas viewport.
 
+## Konten tahap 2
+
+- Tiga layanan demo: Konsultasi Konsep, Desain Interior, dan Pendampingan Realisasi.
+- Tiga proyek fiktif: Rumah Senja, Sudut Kopi, dan Atelier Pagi. Visual bersifat ilustrasi CSS, bukan foto hasil proyek.
+- Satu studi kasus contoh untuk Rumah Senja dengan tantangan, pendekatan, dan hasil konsep. Dua kartu lainnya menampilkan keterangan bahwa studi kasus lengkap belum tersedia (tanpa tautan menyesatkan).
+- Seluruh nama dan deskripsi proyek adalah demonstrasi dan harus diganti sebelum dipakai pada bisnis nyata.
+- Pengujian: `npm test` menjalankan pemeriksaan HTML/CSS statis, interaksi menu berbasis simulasi DOM, dan cek struktur tahap 2. GitHub Actions juga menjalankan Chromium/Playwright untuk tes responsivitas, navigasi mobile, dan kontras hover.
+
 ## Status
 
-Tahap 1 selesai. Tautan navigasi menuju penanda bagian berikutnya sampai konten tahap 2 dan 3 ditambahkan.
+Tahap 1 dan tahap 2 selesai secara implementasi. Navigasi Layanan dan Karya mengarah ke bagian nyata. Menu 'Berikutnya' menuju bagian penanda untuk tahap 3; FAQ akan ditambahkan saat itu.
