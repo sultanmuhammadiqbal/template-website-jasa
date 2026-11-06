@@ -1,0 +1,135 @@
+{
+  "brand": {
+    "name": "Ruang Reka",
+    "mark": "RR",
+    "title": "Ruang Reka | Studio Interior — Template Demo",
+    "description": "Template demo Ruang Reka: layanan desain interior, portofolio konsep fiktif, studi kasus, FAQ, dan kontak yang dapat dikonfigurasi.",
+    "tagline": "Interior yang terasa dekat, dirancang untuk cara hidup Anda.",
+    "eyebrow": "Demo template jasa interior",
+    "heroNote": "Kontak dan identitas bisnis di halaman ini adalah contoh.",
+    "heroImage": "assets/images/hero-studio.webp",
+    "heroAlt": "Dua desainer interior berdiskusi di ruang keluarga modern"
+  },
+  "theme": {
+    "ink": "#171916",
+    "paper": "#f4f1eb",
+    "paperMuted": "#ddd9cf",
+    "accent": "#d8f15f",
+    "white": "#fffef9",
+    "dark": "#262d26",
+    "servicesBackground": "#eeeae1",
+    "faqBackground": "#eae7de"
+  },
+  "services": {
+    "heading": "Ruang yang dirancang untuk hidup.",
+    "intro": "Dari ide awal hingga penyelesaian ruang, pilih dukungan yang sesuai kebutuhan Anda. Seluruh layanan berikut adalah contoh untuk template.",
+    "items": [
+      {
+        "title": "Konsultasi Konsep",
+        "description": "Diskusi kebutuhan, referensi suasana, dan arah desain yang masuk akal untuk rutinitas sehari-hari.",
+        "tag": "Ide & arahan"
+      },
+      {
+        "title": "Desain Interior",
+        "description": "Rencana tata letak, material, pencahayaan, dan visualisasi untuk ruang hunian maupun usaha.",
+        "tag": "Perencanaan"
+      },
+      {
+        "title": "Pendampingan Realisasi",
+        "description": "Koordinasi keputusan desain dan penyelarasan detail selama proses pengerjaan ruang.",
+        "tag": "Implementasi"
+      }
+    ]
+  },
+  "portfolio": {
+    "heading": "Ruang dengan cerita berbeda.",
+    "intro": "Galeri konsep fiktif untuk memperlihatkan bagaimana studi kasus tampil di website. Bukan proyek klien sungguhan.",
+    "items": [
+      {
+        "title": "Rumah Senja",
+        "category": "Hunian · Konsep demo",
+        "description": "Hunian tenang dengan cahaya hangat dan material natural.",
+        "art": "residence",
+        "artAlt": "Ilustrasi abstrak ruang hangat berwarna krem dengan lengkungan arsitektur",
+        "featured": true,
+        "caseStudy": true
+      },
+      {
+        "title": "Sudut Kopi",
+        "category": "Komersial · Konsep demo",
+        "description": "Ruang singgah ringkas dengan alur pengunjung yang jelas.",
+        "art": "cafe",
+        "artAlt": "Ilustrasi abstrak kafe hijau zaitun dan krem",
+        "featured": false,
+        "caseStudy": false
+      },
+      {
+        "title": "Atelier Pagi",
+        "category": "Ruang kerja · Konsep demo",
+        "description": "Studio kecil dengan area fokus dan diskusi fleksibel.",
+        "art": "workspace",
+        "artAlt": "Ilustrasi abstrak ruang kerja biru pucat dan terrakota",
+        "featured": false,
+        "caseStudy": false
+      }
+    ]
+  },
+  "caseStudy": {
+    "name": "Rumah Senja",
+    "heading": "Hunian kecil, ruang terasa lapang.",
+    "lead": "Contoh alur cerita proyek: kebutuhan, pendekatan desain, dan gambaran hasil. Seluruh detail di bawah bersifat ilustratif.",
+    "label": "Fiktif · untuk demonstrasi",
+    "stages": [
+      {
+        "title": "Tantangan",
+        "description": "Penghuni membutuhkan tempat beristirahat, menerima tamu, dan bekerja tanpa membuat ruang terasa penuh."
+      },
+      {
+        "title": "Pendekatan",
+        "description": "Zona multifungsi, penyimpanan tersembunyi, serta palet material terang untuk menjaga ruang tetap nyaman."
+      },
+      {
+        "title": "Hasil konsep",
+        "description": "Rancangan yang mengutamakan alur gerak, penyinaran, dan fleksibilitas perabot. Tidak ada klaim hasil proyek nyata."
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Jawaban sebelum kita mulai.",
+    "intro": "Contoh pertanyaan yang sering diajukan calon klien. Sesuaikan jawaban dengan proses bisnis sebenarnya sebelum publikasi.",
+    "items": [
+      {
+        "question": "Bagaimana proses konsultasi awal?",
+        "answer": "Diskusikan kebutuhan ruang, kebiasaan, dan referensi desain. Tim kemudian dapat menjelaskan pilihan tahapan berikutnya. Ini adalah contoh alur, bukan janji layanan aktif."
+      },
+      {
+        "question": "Apakah bisa membantu ruang usaha?",
+        "answer": "Template ini mencontohkan layanan untuk hunian dan ruang komersial. Cakupan sebenarnya mengikuti portofolio dan kemampuan penyedia jasa."
+      },
+      {
+        "question": "Berapa lama proses desain berlangsung?",
+        "answer": "Durasi bergantung pada luas ruang, cakupan desain, dan revisi. Jadwal baru dapat dipastikan setelah kebutuhan proyek dipahami."
+      },
+      {
+        "question": "Bagaimana mengetahui estimasi biaya?",
+        "answer": "Siapkan gambaran ruang dan hasil yang diharapkan untuk mendapat penawaran yang relevan. Harga dalam website demo ini belum tersedia."
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Mari bicara tentang ruang Anda.",
+    "intro": "Ceritakan ide dan kebutuhan Anda melalui saluran yang tersedia. Kontak berikut masih demonstrasi dan tidak mengirim pesan sampai pemilik template mengaktifkan konfigurasinya.",
+    "demoLabel": "Demo website — belum menerima konsultasi sungguhan",
+    "whatsapp": {
+      "enabled": false,
+      "number": "",
+      "message": "Halo, saya ingin berkonsultasi tentang desain interior."
+    },
+    "email": {
+      "enabled": false,
+      "address": "",
+      "subject": "Konsultasi desain interior Ruang Reka"
+    }
+  },
+  "demo": true
+}
