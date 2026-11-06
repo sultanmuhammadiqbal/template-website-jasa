@@ -203,7 +203,7 @@ function previewMarkup(){
   const tokens={ink:'ink',paper:'paper',paperMuted:'paper-muted',accent:'accent',white:'white',dark:'dark',servicesBackground:'services-bg',faqBackground:'faq-bg'};
   const palette=Object.entries(tokens).map(([key,token])=>'--'+token+':'+data.theme[key]+';').join('');
   html=html.replace('</head>','<style>:root{'+palette+'}</style></head>');
-  html=html.replace(/<script src="config\/contact\.js" defer><\/script>/,'<script>window.RUANG_REKA_CONTACT='+safeScript+';<\/script>');
+  html=html.replace(/<script src="config\/contact\.js" defer><\/script>/,()=>'<script>window.RUANG_REKA_CONTACT='+safeScript+';<\/script>');
   return html;
 }
 function update(){
@@ -228,7 +228,7 @@ editor.addEventListener('input',event=>{
   const el=event.target;
   if(el.dataset.colorPicker){
     const key=el.dataset.colorPicker;put(['theme',key],el.value);
-    const textbox=editor.querySelector('[data-path='+CSS.escape(pathKey(['theme',key]))+']');
+    const textbox=editor.querySelector('#input-theme-'+key);
     if(textbox)textbox.value=el.value;
   }else if(el.dataset.path){
     const path=JSON.parse(el.dataset.path);
