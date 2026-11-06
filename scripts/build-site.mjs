@@ -26,7 +26,7 @@ await mkdir(dist, { recursive: true });
 for (const path of ['styles.css', 'script.js']) {
   await cp(join(root, path), join(dist, path));
 }
-for (const path of ['assets', 'config', 'configurator']) {
+for (const path of ['assets', 'config', 'configurator', 'case-study']) {
   await cp(join(root, path), join(dist, path), { recursive: true });
 }
 // The editor imports the same renderer and validator used during production builds.
