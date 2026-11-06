@@ -64,7 +64,7 @@ for(const special of ['Studio $& Baru',"Studio $' Baru",'Studio $'+'\x60'+' Baru
   changed.brand.description=special;
   changed.brand.mark='ST';
   const output=renderSite(sourceHTML,sourceCSS,changed).html;
-  const encoded=special.replaceAll(String.fromCharCode(39),'&#39;');
+  const encoded=special.replaceAll('&','&amp;').replaceAll(String.fromCharCode(39),'&#39;');
   assert.ok(output.includes('<h1 class="hero-reveal" id="hero-title">'+encoded+'</h1>'));
   assert.ok(output.includes('content="'+encoded+'"'));
   assert.ok(output.includes('aria-label="'+encoded+', kembali ke beranda"'));
