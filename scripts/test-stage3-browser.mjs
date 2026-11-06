@@ -23,6 +23,18 @@ try {
     assert.ok(await first.evaluate(el => el.open), 'Enter should open FAQ at ' + width);
     await page.keyboard.press('Enter');
     assert.equal(await first.evaluate(el => el.open), false, 'Enter should close FAQ at ' + width);
+    // Native summary must support Space as well as Enter and remain in the Tab order.
+    await first.locator('summary').focus();
+    await page.keyboard.press('Space');
+    assert.ok(await first.evaluate(el => el.open), 'Space should open FAQ at ' + width);
+    await page.keyboard.press('Space');
+    assert.equal(await first.evaluate(el => el.open), false, 'Space should close FAQ at ' + width);
+    await first.locator('summary').focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await page.evaluate(() => document.activeElement !== document.querySelector('.faq-item summary')),
+      'Tab should leave the first FAQ trigger at ' + width);
+    assert.ok(await first.locator('summary').evaluate(el => el.tabIndex >= 0),
+      'FAQ summary must remain keyboard focusable at ' + width);
     assert.equal(await page.locator('.faq-item').count(),4);
     assert.equal(await page.locator('[data-contact-link="whatsapp"]').isVisible(),false);
     assert.equal(await page.locator('[data-contact-link="email"]').isVisible(),false);
@@ -50,6 +62,8 @@ try {
   assert.equal(await wa.getAttribute('href'),'https://wa.me/6281234567890?text=Halo%20%26%20selamat%20datang');
   assert.equal(await email.getAttribute('href'),'mailto:kontak@contoh.test?subject=Diskusi%20Proyek');
   assert.equal(await wa.getAttribute('rel'),'noopener noreferrer');
+  assert.match(await configured.locator('.contact-demo').textContent(), /Saluran kontak aktif/);
+  assert.doesNotMatch(await configured.locator('.contact-demo').textContent(), /belum menerima konsultasi sungguhan/);
   await configured.close();
   console.log('PASS enabled contacts: validated encoded URLs');
 
@@ -61,8 +75,27 @@ try {
   await invalid.goto(base);
   assert.equal(await invalid.locator('[data-contact-link="whatsapp"]').isVisible(),false);
   assert.equal(await invalid.locator('[data-contact-link="email"]').isVisible(),false);
+  assert.match(await invalid.locator('.contact-demo').textContent(), /belum menerima konsultasi sungguhan/);
   await invalid.close();
   console.log('PASS invalid contacts: no active CTA');
+
+  for (const unsafe of ['team?subject=Injected@example.com', 'team#frag@example.com', 'team%0A@example.com', 'team..ops@example.com', 'team@example.com?bcc=bad@example.com', 'team@example.com#fragment', 'team@example.com%0aBcc:bad@example.com']) {
+    const page = await browser.newPage();
+    await page.route('**/config/contact.js', route => route.fulfill({
+      status:200, contentType:'application/javascript',
+      body:'window.RUANG_REKA_CONTACT=' + JSON.stringify({
+        whatsapp:{enabled:false,number:''},
+        email:{enabled:true,address:unsafe,subject:'Kontak'}
+      }) + ';'
+    }));
+    await page.goto(base);
+    assert.equal(await page.locator('[data-contact-link="email"]').isVisible(),false,
+      'Unsafe mailbox must not activate link: ' + unsafe);
+    assert.ok(await page.locator('[data-contact-unavailable]').isVisible());
+    await page.close();
+  }
+  console.log('PASS unsafe email delimiters and malformed mailbox rejected');
+
 } finally {
   await browser.close();
 }
