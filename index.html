@@ -10,6 +10,7 @@
     <title>Ruang Reka | Demo Template Jasa Interior</title>
     <link rel="preload" href="assets/images/hero-studio.webp" as="image" type="image/webp" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="config/contact.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -36,8 +37,8 @@
       <nav class="site-nav" id="navigasi-utama" aria-label="Navigasi utama" data-menu>
         <a href="#layanan">Layanan</a>
         <a href="#portofolio">Karya</a>
-        <a href="#tahap-berikutnya">Berikutnya</a>
-        <a class="nav-cta" href="mailto:halo@example.com?subject=Konsultasi%20Demo%20Ruang%20Reka">
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#kontak">
           Hubungi kami
         </a>
       </nav>
@@ -62,7 +63,7 @@
             Interior yang terasa dekat, dirancang untuk cara hidup Anda.
           </p>
           <div class="hero-actions hero-reveal">
-            <a class="button button-primary" href="mailto:halo@example.com?subject=Konsultasi%20Demo%20Ruang%20Reka">
+            <a class="button button-primary" href="#kontak">
               Mulai konsultasi <span aria-hidden="true">&rarr;</span>
             </a>
             <a class="text-link" href="#portofolio">Lihat karya demo</a>
@@ -139,16 +140,50 @@
         </div>
       </section>
 
-      <section class="next-stage" id="tahap-berikutnya" aria-labelledby="next-stage-title">
-        <p class="section-index">05 / Berikutnya</p>
-        <div>
-          <p class="demo-label">Tahap berikutnya</p>
-          <h2 id="next-stage-title">Siap melanjutkan cerita bersama?</h2>
+      <section class="faq-section section-wrap" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <div><p class="section-index">05 / Pertanyaan umum</p><h2 id="faq-title">Jawaban sebelum kita mulai.</h2></div>
+          <p>Contoh pertanyaan yang sering diajukan calon klien. Sesuaikan jawaban dengan proses bisnis sebenarnya sebelum publikasi.</p>
         </div>
-        <p>
-          FAQ dan pengaturan kontak lengkap hadir di tahap 3. Konten saat ini adalah demonstrasi; setiap
-          bagian dapat disesuaikan dengan identitas bisnis Anda.
-        </p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary><span>Bagaimana proses konsultasi awal?</span><span class="faq-symbol" aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><p>Diskusikan kebutuhan ruang, kebiasaan, dan referensi desain. Tim kemudian dapat menjelaskan pilihan tahapan berikutnya. Ini adalah contoh alur, bukan janji layanan aktif.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Apakah bisa membantu ruang usaha?</span><span class="faq-symbol" aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><p>Template ini mencontohkan layanan untuk hunian dan ruang komersial. Cakupan sebenarnya mengikuti portofolio dan kemampuan penyedia jasa.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Berapa lama proses desain berlangsung?</span><span class="faq-symbol" aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><p>Durasi bergantung pada luas ruang, cakupan desain, dan revisi. Jadwal baru dapat dipastikan setelah kebutuhan proyek dipahami.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Bagaimana mengetahui estimasi biaya?</span><span class="faq-symbol" aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><p>Siapkan gambaran ruang dan hasil yang diharapkan untuk mendapat penawaran yang relevan. Harga dalam website demo ini belum tersedia.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="contact-section section-wrap" id="kontak" aria-labelledby="kontak-title">
+        <div class="contact-layout">
+          <div>
+            <p class="section-index">06 / Hubungi kami</p>
+            <h2 id="kontak-title">Mari bicara tentang ruang Anda.</h2>
+            <p class="contact-intro">Ceritakan ide dan kebutuhan Anda melalui saluran yang tersedia. Kontak berikut masih demonstrasi dan tidak mengirim pesan sampai pemilik template mengaktifkan konfigurasinya.</p>
+            <p class="demo-chip contact-demo">Demo website — belum menerima konsultasi sungguhan</p>
+          </div>
+          <div class="contact-panel">
+            <h3>Pilih cara menghubungi</h3>
+            <p>Saluran aktif hanya akan muncul setelah konfigurasi menggunakan informasi bisnis yang valid.</p>
+            <div class="contact-actions">
+              <a class="contact-link" data-contact-link="whatsapp" href="#kontak" hidden target="_blank" rel="noopener noreferrer">Chat melalui WhatsApp <span aria-hidden="true">↗</span></a>
+              <a class="contact-link" data-contact-link="email" href="#kontak" hidden>Kirim email <span aria-hidden="true">↗</span></a>
+              <p class="contact-unavailable" data-contact-unavailable>WhatsApp dan email demo belum diaktifkan.</p>
+            </div>
+            <p class="contact-note" data-contact-status aria-live="polite">Ganti detail kontak di <code>config/contact.js</code> untuk mengaktifkan tautan.</p>
+          </div>
+        </div>
       </section>
     </main>
   </body>
