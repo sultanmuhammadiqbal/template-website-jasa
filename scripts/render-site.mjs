@@ -1,3 +1,4 @@
+import { validateSite } from './validate-site.mjs';
 const q=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const replaceSection=(html,id,body)=>{
   const re=new RegExp('(<section\\b[^>]*\\bid="'+id+'"[^>]*>)[\\s\\S]*?(<\\/section>)');
@@ -6,25 +7,19 @@ const replaceSection=(html,id,body)=>{
 };
 const colors={ink:'--ink',paper:'--paper',paperMuted:'--paper-muted',accent:'--accent',white:'--white',dark:'--dark',servicesBackground:'--services-bg',faqBackground:'--faq-bg'};
 export function renderSite(html,css,data) {
-  for(const key of ['brand','theme','services','portfolio','caseStudy','faq','contact']) if(!data[key]) throw new Error('Missing '+key);
-  for(const key of Object.keys(colors)) if(!/^#[a-f0-9]{6}$/i.test(data.theme[key])) throw new Error('Invalid color '+key);
-  for(const key of ['services','portfolio','faq']) if(!Array.isArray(data[key].items)||data[key].items.length<1||data[key].items.length>12) throw new Error('Invalid '+key+' items');
-  if(data.portfolio.items.filter(x=>x.caseStudy).length!==1)throw new Error('Exactly one case study project required');
-  if(!Array.isArray(data.caseStudy.stages)||!data.caseStudy.stages.length)throw new Error('Missing case study stages');
-  if(!/^[a-z0-9/_-]+\.webp$/i.test(data.brand.heroImage)||data.brand.heroImage.startsWith('/'))throw new Error('Unsafe hero image path');
-  for(const project of data.portfolio.items) if(!['residence','cafe','workspace'].includes(project.art))throw new Error('Unknown art style');
-  const b=data.brand,s=data.services,p=data.portfolio,c=data.caseStudy,f=data.faq,ct=data.contact;
+  validateSite(data);
+  const b=data.brand,s=data.services,p=data.portfolio,c=data.caseStudy,f=data.faq,ct=data.contact,l=data.labels;
   html=html.replace(/<title>[^<]*<\/title>/,'<title>'+q(b.title)+'</title>');
-  html=html.replace(/(rel="preload" href=")[^"]*(")/,'$1'+q(b.heroImage)+'$2');
-  html=html.replace(/(name="theme-color" content=")[^"]*(")/,'$1'+q(data.theme.dark)+'$2');
-  html=html.replace(/(property="og:image:alt" content=")[^"]*(")/,'$1'+q(b.heroAlt)+'$2');
-  html=html.replace(/(name="description"\s+content=")[^"]*"/,'$1'+q(b.description)+'"');
+  html=html.replace(/(rel="preload" href=")[^"]*(")/,(_,pre,post)=>pre+q(b.heroImage)+post);
+  html=html.replace(/(name="theme-color" content=")[^"]*(")/,(_,pre,post)=>pre+q(data.theme.dark)+post);
+  html=html.replace(/(property="og:image:alt" content=")[^"]*(")/,(_,pre,post)=>pre+q(b.heroAlt)+post);
+  html=html.replace(/(name="description"\s+content=")[^"]*"/,(_,pre)=>pre+q(b.description)+'"');
   for(const prop of ['og:title','twitter:title','og:site_name','og:description','twitter:description']){
     const content=prop==='og:site_name'?b.name:prop.includes('description')?b.description:b.title;
-    html=html.replace(new RegExp('((?:name|property)="'+prop+'" content=")[^"]*"'),'$1'+q(content)+'"');
+    html=html.replace(new RegExp('((?:name|property)="'+prop+'" content=")[^"]*"'),(_,pre)=>pre+q(content)+'"');
   }
-  html=html.replace(/(class="brand"[^>]*aria-label=")[^"]*"/,'$1'+q(b.name+', kembali ke beranda')+'"');
-  html=html.replace(/(<span class="brand-mark" aria-hidden="true">)[^<]*(<\/span>\s*<span>)[^<]*(<\/span>)/,'$1'+q(b.mark)+'$2'+q(b.name)+'$3');
+  html=html.replace(/(class="brand"[^>]*aria-label=")[^"]*"/,(_,pre)=>pre+q(b.name+', kembali ke beranda')+'"');
+  html=html.replace(/(<span class="brand-mark" aria-hidden="true">)[^<]*(<\/span>\s*<span>)[^<]*(<\/span>)/,(_,pre,middle,post)=>pre+q(b.mark)+middle+q(b.name)+post);
   html=replaceSection(html,'beranda',
     '<img class="hero-image" src="'+q(b.heroImage)+'" alt="'+q(b.heroAlt)+'" width="1672" height="941" fetchpriority="high" decoding="async" />'+
     '<div class="hero-shade" aria-hidden="true"></div><div class="hero-content"><p class="demo-label hero-reveal">'+q(b.eyebrow)+'</p>'+
