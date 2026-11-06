@@ -29,6 +29,7 @@ jobs:
           node --check scripts/validate-site.mjs
           node --check scripts/test-custom-browser.mjs
           node --check scripts/test-configurator-browser.mjs
+          node --check scripts/test-arunika-package-browser.mjs
           node --check configurator/configurator.js
           node --check scripts/test-template.mjs
           node --check scripts/test-production.mjs
@@ -36,6 +37,16 @@ jobs:
           node --check scripts/report-lighthouse.mjs
       - name: Run all tests
         run: npm test
+      - name: Package and test buyer ZIP
+        run: |
+          python3 -m py_compile scripts/package-template.py scripts/test-package.py
+          python3 scripts/test-package.py
+      - name: Upload buyer ZIP candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-jasa-v1-0-0-candidate
+          path: release/template-website-jasa-v1.0.0.zip
+          if-no-files-found: error
       - name: Install Playwright and Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2 lighthouse@12
@@ -54,6 +65,7 @@ jobs:
           node scripts/audit-browser.mjs
           node scripts/test-custom-browser.mjs
           node scripts/test-configurator-browser.mjs
+          node scripts/test-arunika-package-browser.mjs
       - name: Lighthouse baseline report
         run: |
           mkdir -p artifacts

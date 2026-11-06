@@ -1,0 +1,134 @@
+{
+  "brand": {
+    "name": "Studio Arunika",
+    "mark": "SA",
+    "title": "Studio Arunika | Template Demo Interior",
+    "description": "Contoh website Studio Arunika, studio desain interior fiktif untuk demonstrasi template jasa.",
+    "tagline": "Ruang sederhana, cerita yang bermakna.",
+    "eyebrow": "Contoh konfigurasi kedua · bisnis fiktif",
+    "heroNote": "Seluruh nama, visual, dan contoh layanan di halaman ini adalah demonstrasi.",
+    "heroImage": "assets/images/hero-studio.webp",
+    "heroAlt": "Dua desainer interior berdiskusi di ruang keluarga modern"
+  },
+  "theme": {
+    "ink": "#171916",
+    "paper": "#f4f1eb",
+    "paperMuted": "#ddd9cf",
+    "accent": "#e0f085",
+    "white": "#fffef9",
+    "dark": "#1d3040",
+    "servicesBackground": "#edf0e9",
+    "faqBackground": "#e4ece7"
+  },
+  "services": {
+    "heading": "Desain yang mendukung keseharian.",
+    "intro": "Contoh layanan untuk studio interior fiktif. Ubah sesuai keahlian dan proses bisnismu.",
+    "items": [
+      {
+        "title": "Diskusi Kebutuhan",
+        "description": "Menyusun prioritas, ukuran ruang dan referensi visual secara kolaboratif.",
+        "tag": "Konsultasi"
+      },
+      {
+        "title": "Konsep Tata Ruang",
+        "description": "Menata fungsi ruang dan pilihan material sesuai aktivitas sehari-hari.",
+        "tag": "Rancangan"
+      }
+    ]
+  },
+  "portfolio": {
+    "heading": "Contoh ruang, berbagai kemungkinan.",
+    "intro": "Seluruh proyek berikut merupakan ilustrasi fiktif, bukan portofolio klien.",
+    "items": [
+      {
+        "title": "Rumah Arunika",
+        "category": "Hunian · Konsep fiktif",
+        "description": "Contoh konsep hunian bernuansa hangat dan terang.",
+        "art": "residence",
+        "artAlt": "Ilustrasi bentuk arsitektur hunian abstrak",
+        "featured": true,
+        "caseStudy": true
+      },
+      {
+        "title": "Kedai Pagi",
+        "category": "Komersial · Konsep fiktif",
+        "description": "Contoh ruang usaha kecil dengan sirkulasi yang efisien.",
+        "art": "cafe",
+        "artAlt": "Ilustrasi abstrak kedai dengan aksen warna",
+        "featured": false,
+        "caseStudy": false
+      }
+    ]
+  },
+  "caseStudy": {
+    "name": "Rumah Arunika",
+    "heading": "Contoh alur proyek hunian.",
+    "lead": "Studi kasus ini hanya simulasi editorial, bukan laporan hasil pekerjaan nyata.",
+    "label": "Studi kasus fiktif",
+    "stages": [
+      {
+        "title": "Tantangan",
+        "description": "Penghuni membutuhkan tempat beristirahat, menerima tamu, dan bekerja tanpa membuat ruang terasa penuh."
+      },
+      {
+        "title": "Pendekatan",
+        "description": "Zona multifungsi, penyimpanan tersembunyi, serta palet material terang untuk menjaga ruang tetap nyaman."
+      },
+      {
+        "title": "Hasil konsep",
+        "description": "Rancangan yang mengutamakan alur gerak, penyinaran, dan fleksibilitas perabot. Tidak ada klaim hasil proyek nyata."
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Informasi umum",
+    "intro": "Jawaban berikut adalah contoh dan tidak berlaku sebagai komitmen layanan.",
+    "items": [
+      {
+        "question": "Bagaimana memulai diskusi?",
+        "answer": "Persiapkan kebutuhan dan referensi ruang agar percakapan awal lebih terarah."
+      },
+      {
+        "question": "Apakah proyek ini nyata?",
+        "answer": "Tidak. Semua proyek dan nama bisnis dalam konfigurasi contoh bersifat fiktif."
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Diskusikan ide ruang Anda.",
+    "intro": "Ini adalah konfigurasi demonstrasi. Saluran kontak belum diaktifkan.",
+    "demoLabel": "Demo · tidak menerima permintaan layanan",
+    "whatsapp": {
+      "enabled": false,
+      "number": "",
+      "message": "Halo, saya ingin konsultasi desain."
+    },
+    "email": {
+      "enabled": false,
+      "address": "",
+      "subject": "Permintaan konsultasi Studio Arunika"
+    }
+  },
+  "labels": {
+    "heroPrimary": "Lihat kontak demo",
+    "heroSecondary": "Jelajahi konsep",
+    "scrollCue": "Jelajahi",
+    "portfolioReadCase": "Baca studi kasus",
+    "portfolioPending": "Studi kasus lengkap menyusul",
+    "caseBack": "Kembali ke portofolio",
+    "caseIndex": "04 / Studi kasus demo",
+    "servicesIndex": "02 / Layanan",
+    "portfolioIndex": "03 / Portofolio",
+    "faqIndex": "05 / Pertanyaan umum",
+    "contactIndex": "06 / Hubungi kami",
+    "contactPanelTitle": "Pilih cara menghubungi",
+    "contactPanelInfo": "Saluran aktif hanya akan muncul setelah konfigurasi menggunakan informasi bisnis yang valid.",
+    "contactWhatsApp": "Chat melalui WhatsApp",
+    "contactEmail": "Kirim email",
+    "contactUnavailable": "Kontak demo dinonaktifkan.",
+    "contactHint": "Masukkan kontak bisnis asli sebelum aktivasi.",
+    "contactActiveNote": "Gunakan kontak yang tersedia untuk memulai percakapan.",
+    "contactActiveDemo": "Saluran kontak aktif — identitas dan isi website tetap berupa demo.",
+    "contactInactiveNote": "Kontak demo belum aktif. Gunakan detail bisnis yang sah."
+  }
+}

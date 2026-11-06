@@ -119,6 +119,14 @@ Buka `http://localhost:4173/configurator/` setelah menjalankan `npm run dev`. Co
 
 CI menguji layar configurator 375/1280 piksel, audit axe, penggantian brand dan warna, validasi error, dan struktur JSON hasil unduhan.
 
+## Fase A3 — Paket Distribusi Kandidat v1.0.0
+
+Jalankan `python3 scripts/package-template.py` untuk membuat `release/template-website-jasa-v1.0.0.zip`. CI otomatis menjalankan `python3 scripts/test-package.py`, membuka ZIP pada direktori sementara, menjalankan `npm test` dan `npm run build` sebagai pembeli, kemudian membangun contoh brand kedua dari `examples/studio-arunika.site.json`.
+
+ZIP menggunakan allowlist eksplisit dan tidak menyertakan riwayat Git, `.env`, rahasia, dependensi terinstal, CI, atau hasil build. Unduh ZIP sebagai **GitHub Actions artifact** pada PR setelah CI berhasil; bukan rilis berbayar otomatis.
+
+Panduan pembeli, checklist peluncuran, hak penggunaan aset, dan **draf** ketentuan lisensi tersedia di `buyer/` dalam ZIP. **Jangan mendistribusikan untuk penjualan sampai hak gambar hero dan aset lainnya serta syarat lisensi final telah diverifikasi.**
+
 ## Status
 
 Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge PR Fase A1 tetap wajib; demo bukan representasi bisnis sungguhan.
