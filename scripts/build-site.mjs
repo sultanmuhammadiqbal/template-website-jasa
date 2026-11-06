@@ -1,3 +1,4 @@
+import { renderSite } from './render-site.mjs';
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -19,6 +20,7 @@ if (wantsIndexing && !siteURL) {
   throw new Error('ENABLE_INDEXING=true requires SITE_URL for canonical and sharing metadata');
 }
 
+const config = JSON.parse(await readFile(join(root, 'config/site.json'),'utf8'));
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 for (const path of ['styles.css', 'script.js']) {
@@ -28,9 +30,21 @@ for (const path of ['assets', 'config']) {
   await cp(join(root, path), join(dist, path), { recursive: true });
 }
 let html = await readFile(join(root, 'index.html'), 'utf8');
+let css = await readFile(join(root, 'styles.css'), 'utf8');
+({ html, css } = renderSite(html, css, config));
+await writeFile(join(dist, 'styles.css'), css);
+const safeXML = str => String(str).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const brandMark = config.brand.mark.trim().slice(0,4);
+await writeFile(join(dist, 'assets/favicon.svg'),
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="9" fill="' + config.theme.dark + '"/><text x="32" y="39" fill="' + config.theme.accent + '" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="21">' + safeXML(brandMark) + '</text></svg>\n');
+await writeFile(join(dist, 'config/contact.js'), 'window.RUANG_REKA_CONTACT = Object.freeze(' + JSON.stringify({
+  whatsapp: config.contact.whatsapp,
+  email: config.contact.email,
+  labels: {activeNote:config.labels.contactActiveNote,activeDemo:config.labels.contactActiveDemo,inactiveNote:config.labels.contactInactiveNote}
+}) + ');\n');
 const meta = [];
 if (siteURL) {
-  const absoluteHero = siteURL + '/assets/images/hero-studio.webp';
+  const absoluteHero = siteURL + '/' + config.brand.heroImage;
   const escapeAttr = str => str.replaceAll('&', '&amp;').replaceAll('"', '&quot;');
   meta.push('<link rel="canonical" href="' + escapeAttr(siteURL + '/') + '" />');
   meta.push('<meta property="og:url" content="' + escapeAttr(siteURL + '/') + '" />');

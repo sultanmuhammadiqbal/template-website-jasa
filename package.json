@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "python3 -m http.server 4173",
-    "test": "node scripts/check-site.mjs && node scripts/test-menu.mjs && node scripts/test-stage2.mjs && node scripts/test-production.mjs",
+    "dev": "npm run build && python3 -m http.server 4173 --directory dist",
+    "test": "node scripts/check-site.mjs && node scripts/test-menu.mjs && node scripts/test-stage2.mjs && node scripts/test-production.mjs && node scripts/test-template.mjs",
     "build": "node scripts/build-site.mjs"
   }
 }
