@@ -18,7 +18,8 @@ try{
     assert.equal(await page.locator('#export-button').isEnabled(),true);
     assert.equal(await page.locator('#preview-frame').contentFrame().locator('#hero-title').textContent(),'Ruang Reka');
     const computed=await page.locator('#preview-frame').contentFrame().locator('#studi-kasus').evaluate(()=>({section:getComputedStyle(document.querySelector('#studi-kasus')).backgroundColor, dark:getComputedStyle(document.documentElement).getPropertyValue('--dark'),darkConfigured:getComputedStyle(document.documentElement).getPropertyValue('--dark-configured'),styles:document.querySelectorAll('style').length,body:getComputedStyle(document.body).backgroundColor}));
-    console.log('PREVIEW DIAGNOSTIC '+width+': '+JSON.stringify(computed));
+    assert.equal(computed.darkConfigured,'#262d26');
+    assert.equal(computed.section,'rgb(38, 45, 38)','Preview must retain configured dark backgrounds');
     const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
     assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),[],'Configurator WCAG errors at '+width);
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
