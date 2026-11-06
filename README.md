@@ -90,12 +90,13 @@ Bagian utama:
 | `caseStudy` | Nama proyek, judul, pengantar dan tahapan narasi |
 | `faq.items` | Pertanyaan/jawaban (1–12 item) |
 | `contact` | Judul, deskripsi, label status, WhatsApp dan email |
+| `labels` | Teks tombol, navigasi bagian, status dan petunjuk kontak (termasuk saat saluran aktif) |
 
 ### Contoh penggunaan
 
 1. Edit `config/site.json`: ubah `brand.name`, `brand.mark`, `brand.tagline`, dan isi layanan sesuai bisnis.
-2. Untuk warna, ubah `theme.accent` dan warna lainnya. Setelah mengganti palet, cek kontras teks melalui audit WCAG.
-3. Portofolio menggunakan ilustrasi `art` yang tersedia: `residence`, `cafe`, atau `workspace`. Buat atau modifikasi CSS jika butuh jenis ilustrasi baru. Set tepat satu `caseStudy: true` untuk kartu yang menaut ke studi kasus.
+2. Untuk warna, ubah `theme.accent` dan warna lainnya. Build memeriksa rasio kontras warna utama minimal 4,5:1 dan menolak kombinasi yang tidak aman; tetap periksa seluruh tampilan melalui axe dan evaluasi manual.
+3. Portofolio menggunakan ilustrasi `art` yang tersedia: `residence`, `cafe`, atau `workspace`. Buat atau modifikasi CSS jika butuh jenis ilustrasi baru. Set tepat satu `caseStudy: true` untuk kartu yang menaut ke studi kasus, dan pastikan judul kartu sama dengan `caseStudy.name`.
 4. Aktifkan kontak valid melalui `contact.whatsapp` dan/atau `contact.email`. Status default tetap nonaktif.
 5. Jalankan `npm test`, kemudian `npm run build` dan lihat hasil `dist/`. Untuk pratinjau lokal gunakan `npm run dev`.
 6. Di Cloudflare Pages, biarkan build command `npm run build` dan output directory `dist`. Perubahan yang digabungkan ke `main` otomatis membangun ulang website.
@@ -104,4 +105,4 @@ Bagian utama:
 
 ## Status
 
-Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge tahap 4 tetap wajib; demo bukan representasi bisnis sungguhan.
+Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge PR Fase A1 tetap wajib; demo bukan representasi bisnis sungguhan.
