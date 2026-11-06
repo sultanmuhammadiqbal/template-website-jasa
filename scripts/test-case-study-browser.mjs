@@ -14,7 +14,7 @@ assert.match(html, /class="hero-art" role="img" aria-label="Ilustrasi konseptual
 assert.match(html, /Lighthouse Performance<br>homepage demo · CI/);
 assert.match(html, /Lighthouse Accessibility<br>homepage demo · CI/);
 assert.match(html, /bukan skor halaman studi kasus ini/);
-const externalBlankLinks = [...html.matchAll(/<a\\b[^>]*target="_blank"[^>]*>/g)].map(match=>match[0]);
+const externalBlankLinks = [...html.matchAll(/<a [^>]*target="_blank"[^>]*>/g)].map(match=>match[0]);
 assert.ok(externalBlankLinks.length > 0);
 for(const tag of externalBlankLinks) assert.match(tag,/rel="noopener noreferrer"/);
 
