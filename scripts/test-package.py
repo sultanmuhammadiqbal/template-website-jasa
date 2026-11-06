@@ -40,7 +40,7 @@ for svg in [
     else:
         raise AssertionError("Unsafe SVG allowed")
 try:
-    packager.scan_secrets("fake.txt", b"-----BEGIN PRIVATE KEY-----\nfake\n-----END PRIVATE KEY-----")
+    packager.scan_secrets("fake.txt", b"-----BEGIN " + b"PRIVATE KEY-----\nfake\n-----END PRIVATE KEY-----")
 except ValueError:
     pass
 else:
