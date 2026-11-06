@@ -9,7 +9,8 @@ await mkdir(new URL('../artifacts/screenshots/', import.meta.url), { recursive:t
 const issues = [];
 try {
   for (const width of widths) {
-    const page = await browser.newPage({ viewport:{ width, height:900 }, reducedMotion:'reduce' });
+    const context = await browser.newContext({ viewport:{ width, height:900 }, reducedMotion:'reduce' });
+    const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const response = await page.goto('http://127.0.0.1:4173/', { waitUntil:'load' });
@@ -33,7 +34,7 @@ try {
     }
     await page.screenshot({ path:new URL('../artifacts/screenshots/home-'+width+'.png', import.meta.url).pathname, fullPage:true, animations:'disabled' });
     console.log('PASS viewport '+width+'px: image, headings, FAQ, runtime and screenshot; axe violations: '+axe.violations.length);
-    await page.close();
+    await context.close();
   }
 } finally {
   await browser.close();
