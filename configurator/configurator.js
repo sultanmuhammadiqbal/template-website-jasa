@@ -199,7 +199,10 @@ function previewMarkup(){
   const safeScript=JSON.stringify(safeRuntime).replace(/</g,'\\u003c');
   // Preview never turns on live WhatsApp or mailto links, even when export settings enable them.
   let html=rendered.html.replace('<head>','<head><base href="'+safeBase+'">');
-  html=html.replace(/<link rel="stylesheet" href="styles\.css" \/>/,'<style>'+rendered.css+'</style>');
+  html=html.replace(/<link rel="stylesheet" href="styles\\.css" \\/>/,()=>'<style>'+rendered.css+'</style>');
+  const tokens={ink:'ink',paper:'paper',paperMuted:'paper-muted',accent:'accent',white:'white',dark:'dark',servicesBackground:'services-bg',faqBackground:'faq-bg'};
+  const palette=Object.entries(tokens).map(([key,token])=>'--'+token+':'+data.theme[key]+';').join('');
+  html=html.replace('</head>','<style>:root{'+palette+'}</style></head>');
   html=html.replace(/<script src="config\/contact\.js" defer><\/script>/,'<script>window.RUANG_REKA_CONTACT='+safeScript+';<\/script>');
   return html;
 }
