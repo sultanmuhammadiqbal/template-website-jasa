@@ -41,6 +41,19 @@ check('responsive columns collapse on mobile', () => {
 });
 check('reduced motion remains supported', () => assert.match(css, /prefers-reduced-motion: reduce/));
 
+check('unfinished projects are explicitly non-interactive', () => {
+  assert.equal((html.match(/class="project-note"/g) ?? []).length, 2);
+  assert.equal((html.match(/class="project-link"/g) ?? []).length, 1);
+  assert.match(html, /Studi kasus lengkap menyusul/);
+});
+check('future stage navigation does not mislabel FAQ', () => {
+  assert.match(html, /href="#tahap-berikutnya">Berikutnya<\/a>/);
+  assert.doesNotMatch(html, /href="#tahap-berikutnya">FAQ<\/a>/);
+});
+check('case study hover uses accessible accent color', () => {
+  assert.match(css, /\.case-back:hover \{ color:var\(--accent\); \}/);
+});
+
 let failures = 0;
 for (const [name, fn] of tests) {
   try { fn(); console.log('PASS ' + name); }
