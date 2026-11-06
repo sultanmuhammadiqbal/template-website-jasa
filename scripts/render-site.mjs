@@ -15,6 +15,9 @@ export function renderSite(html,css,data) {
   for(const project of data.portfolio.items) if(!['residence','cafe','workspace'].includes(project.art))throw new Error('Unknown art style');
   const b=data.brand,s=data.services,p=data.portfolio,c=data.caseStudy,f=data.faq,ct=data.contact;
   html=html.replace(/<title>[^<]*<\/title>/,'<title>'+q(b.title)+'</title>');
+  html=html.replace(/(rel="preload" href=")[^"]*(")/,'$1'+q(b.heroImage)+'$2');
+  html=html.replace(/(name="theme-color" content=")[^"]*(")/,'$1'+q(data.theme.dark)+'$2');
+  html=html.replace(/(property="og:image:alt" content=")[^"]*(")/,'$1'+q(b.heroAlt)+'$2');
   html=html.replace(/(name="description"\s+content=")[^"]*"/,'$1'+q(b.description)+'"');
   for(const prop of ['og:title','twitter:title','og:site_name','og:description','twitter:description']){
     const content=prop==='og:site_name'?b.name:prop.includes('description')?b.description:b.title;
