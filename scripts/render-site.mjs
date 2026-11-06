@@ -1,6 +1,6 @@
 const q=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const replaceSection=(html,id,body)=>{
-  const re=new RegExp('(<section\b[^>]*\bid="'+id+'"[^>]*>)[\s\S]*?(<\/section>)');
+  const re=new RegExp('(<section\\b[^>]*\\bid="'+id+'"[^>]*>)[\\s\\S]*?(<\\/section>)');
   if(!re.test(html)) throw new Error('Missing section '+id);
   return html.replace(re,(all,open,close)=>open+body+close);
 };
