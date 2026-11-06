@@ -6,7 +6,7 @@ Fondasi template website bisnis jasa yang ringan dan dapat digunakan ulang. Impl
 
 - HTML semantik
 - CSS mobile-first tanpa framework
-- JavaScript ringan untuk navigasi mobile dan perubahan header
+- JavaScript ringan untuk navigasi mobile dan konfigurasi kontak yang dihasilkan saat build
 - Tanpa dependensi, backend, database, atau layanan eksternal
 
 ## Menjalankan lokal
@@ -17,7 +17,7 @@ Prasyarat: Python 3 untuk server lokal dan Node.js 18+ untuk pemeriksaan statis.
 npm run dev
 ```
 
-Buka `http://localhost:4173`.
+Buka `http://localhost:4173`. Perintah `npm run dev` membangun lalu menyajikan folder `dist/`, sehingga hasil lokal sama dengan Cloudflare Pages. Setelah mengubah konfigurasi, jalankan ulang perintah untuk melihat hasilnya.
 
 ## Pemeriksaan
 
@@ -50,7 +50,7 @@ npm test
 
 ### Mengaktifkan kontak untuk bisnis nyata
 
-Edit berkas `config/contact.js`. Atur `whatsapp.enabled` menjadi `true` dan `whatsapp.number` ke nomor WhatsApp aktif format internasional tanpa `+`, spasi, atau tanda baca (contoh format: `6281234567890`). Atur `email.enabled` menjadi `true` dan `email.address` ke alamat email bisnis yang valid. Isi `message` dan `subject` sesuai kebutuhan. Kedua saluran boleh diaktifkan terpisah; keduanya `false` secara default. Email dibatasi ke alamat ASCII konvensional dan tidak menerima karakter URL seperti `?`, `#`, `%`, spasi, atau baris baru; bila alamat bisnis memakai format internasional yang lebih kompleks, perlu penyesuaian validasi secara teruji. Saat setidaknya satu saluran aktif, pesan status akan berubah tetapi identitas dan konten bisnis tetap dilabeli demo.
+Edit berkas `config/site.json` pada objek `contact`. Atur `contact.whatsapp.enabled` menjadi `true` dan `contact.whatsapp.number` ke nomor WhatsApp aktif format internasional tanpa `+`, spasi, atau tanda baca (contoh format: `6281234567890`). Atur `contact.email.enabled` menjadi `true` dan `contact.email.address` ke alamat email bisnis yang valid. Isi `message` dan `subject` sesuai kebutuhan. Kedua saluran boleh diaktifkan terpisah; keduanya `false` secara default. Email dibatasi ke alamat ASCII konvensional dan tidak menerima karakter URL seperti `?`, `#`, `%`, spasi, atau baris baru; bila alamat bisnis memakai format internasional yang lebih kompleks, perlu penyesuaian validasi secara teruji. Saat setidaknya satu saluran aktif, pesan status akan berubah tetapi identitas dan konten bisnis tetap dilabeli demo.
 
 > Jangan gunakan data bisnis fiktif atau nomor telepon milik orang lain. Website ini tidak memiliki backend/formulir pengiriman pesan; tombol hanya membuka WhatsApp atau aplikasi email jika telah dikonfigurasi.
 
@@ -70,11 +70,38 @@ Jalankan `npm test` untuk pengujian statis. Browser tests dijalankan di GitHub A
 ### Checklist publikasi
 
 1. Ganti seluruh konten/portofolio ilustratif dengan materi yang punya hak penggunaan; verifikasi hak dan izin foto.
-2. Aktifkan kontak valid di `config/contact.js` serta cek pesan status.
+2. Aktifkan kontak valid di `config/site.json` serta cek pesan status.
 3. Konfirmasi domain HTTPS, canonical, gambar share, dan `ENABLE_INDEXING`.
 4. Tinjau hasil screenshot & Lighthouse, lalu uji manual keyboard dan screen reader.
 5. Pastikan konfigurasi HTTPS, cache/compression, security headers dan 404 dilakukan di penyedia hosting; website ini statis tanpa backend.
 
+## Fase A1 — Template yang dapat dikonfigurasi
+
+**Satu sumber kebenaran:** `config/site.json`. Tidak perlu mengedit HTML, CSS, atau `config/contact.js` untuk mengganti identitas klien. Berkas `dist/config/contact.js` dihasilkan otomatis saat build dan **jangan diedit langsung**.
+
+Bagian utama:
+
+| Kunci JSON | Apa yang dapat diganti |
+|---|---|
+| `brand` | Nama usaha, inisial logo, judul/deskripsi SEO, slogan, catatan demo, gambar dan alt hero |
+| `theme` | Warna teks, latar, aksen, bagian gelap, layanan, dan FAQ (semua format `#RRGGBB`) |
+| `services.items` | Judul, deskripsi, dan tag layanan (1–12 item) |
+| `portfolio.items` | Judul, kategori, deskripsi dan ilustrasi CSS proyek (1–12 item) |
+| `caseStudy` | Nama proyek, judul, pengantar dan tahapan narasi |
+| `faq.items` | Pertanyaan/jawaban (1–12 item) |
+| `contact` | Judul, deskripsi, label status, WhatsApp dan email |
+
+### Contoh penggunaan
+
+1. Edit `config/site.json`: ubah `brand.name`, `brand.mark`, `brand.tagline`, dan isi layanan sesuai bisnis.
+2. Untuk warna, ubah `theme.accent` dan warna lainnya. Setelah mengganti palet, cek kontras teks melalui audit WCAG.
+3. Portofolio menggunakan ilustrasi `art` yang tersedia: `residence`, `cafe`, atau `workspace`. Buat atau modifikasi CSS jika butuh jenis ilustrasi baru. Set tepat satu `caseStudy: true` untuk kartu yang menaut ke studi kasus.
+4. Aktifkan kontak valid melalui `contact.whatsapp` dan/atau `contact.email`. Status default tetap nonaktif.
+5. Jalankan `npm test`, kemudian `npm run build` dan lihat hasil `dist/`. Untuk pratinjau lokal gunakan `npm run dev`.
+6. Di Cloudflare Pages, biarkan build command `npm run build` dan output directory `dist`. Perubahan yang digabungkan ke `main` otomatis membangun ulang website.
+
+**Batasan A1:** konfigurasi adalah JSON yang diedit manual, belum antarmuka admin atau CMS. Nama layanan dan FAQ fleksibel; ilustrasi saat ini memakai tiga gaya CSS yang tersedia. Seluruh kata-kata demo, foto, klaim fiktif, hak gambar, dan label portofolio harus ditinjau ulang sebelum digunakan untuk bisnis nyata. Pengaturan `noindex` pada demo tetap berlaku.
+
 ## Status
 
-Tahap 1–4 diimplementasikan. Review dan persetujuan merge tahap 4 tetap wajib; demo bukan representasi bisnis sungguhan.
+Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge tahap 4 tetap wajib; demo bukan representasi bisnis sungguhan.
