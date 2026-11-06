@@ -46,9 +46,9 @@ check('unfinished projects are explicitly non-interactive', () => {
   assert.equal((html.match(/class="project-link"/g) ?? []).length, 1);
   assert.match(html, /Studi kasus lengkap menyusul/);
 });
-check('future stage navigation does not mislabel FAQ', () => {
-  assert.match(html, /href="#tahap-berikutnya">Berikutnya<\/a>/);
-  assert.doesNotMatch(html, /href="#tahap-berikutnya">FAQ<\/a>/);
+check('FAQ navigation points to the FAQ section', () => {
+  assert.match(html, /href="#faq">FAQ<\/a>/);
+  assert.match(html, /id="faq"/);
 });
 check('case study hover uses accessible accent color', () => {
   assert.match(css, /\.case-back:hover \{ color:var\(--accent\); \}/);
