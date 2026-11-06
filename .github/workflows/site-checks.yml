@@ -26,6 +26,8 @@ jobs:
           node --check scripts/test-stage3-browser.mjs
           node --check scripts/build-site.mjs
           node --check scripts/render-site.mjs
+          node --check scripts/validate-site.mjs
+          node --check scripts/test-custom-browser.mjs
           node --check scripts/test-template.mjs
           node --check scripts/test-production.mjs
           node --check scripts/audit-browser.mjs
@@ -48,6 +50,7 @@ jobs:
           node scripts/test-browser.mjs
           node scripts/test-stage3-browser.mjs
           node scripts/audit-browser.mjs
+          node scripts/test-custom-browser.mjs
       - name: Lighthouse baseline report
         run: |
           mkdir -p artifacts
