@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import { readFile, stat } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+
+const source = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+assert.match(source, /<meta name="robots" content="noindex, nofollow"/);
+assert.match(source, /property="og:title"/);
+assert.match(source, /property="og:description"/);
+assert.match(source, /name="twitter:card"/);
+assert.match(source, /name="theme-color"/);
+assert.match(source, /rel="icon"/);
+assert.doesNotMatch(source, /property="og:image" content="(?!https:)/);
+assert.equal((source.match(/<h1\b/g) || []).length, 1);
+const run = (env) => spawnSync(process.execPath, [new URL('./build-site.mjs', import.meta.url).pathname], {
+  encoding: 'utf8', env: { ...process.env, SITE_URL:'', ENABLE_INDEXING:'', ...env }
+});
+const demo = run({});
+assert.equal(demo.status, 0, demo.stderr);
+const demoHTML = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
+assert.match(demoHTML, /content="noindex, nofollow"/);
+assert.doesNotMatch(demoHTML, /rel="canonical"/);
+await stat(new URL('../dist/assets/images/hero-studio.webp', import.meta.url));
+await stat(new URL('../dist/assets/favicon.svg', import.meta.url));
+await stat(new URL('../dist/config/contact.js', import.meta.url));
+const domain = 'https://interior.example.test';
+const deployed = run({ SITE_URL:domain, ENABLE_INDEXING:'true' });
+assert.equal(deployed.status, 0, deployed.stderr);
+const ready = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
+assert.match(ready, /content="index, follow"/);
+assert.ok(ready.includes('rel="canonical" href="' + domain + '/"'));
+assert.ok(ready.includes('property="og:image" content="' + domain + '/assets/images/hero-studio.webp"'));
+assert.ok(ready.includes('name="twitter:image" content="' + domain + '/assets/images/hero-studio.webp"'));
+const bad = run({ ENABLE_INDEXING:'true' });
+assert.notEqual(bad.status, 0, 'Indexing without SITE_URL must fail');
+const insecure = run({ SITE_URL:'http://interior.example.test' });
+assert.notEqual(insecure.status, 0, 'Insecure canonical domain must fail');
+const query = run({ SITE_URL:'https://interior.example.test/?q=1' });
+assert.notEqual(query.status, 0, 'Query strings in production origin must fail');
+const finalDemo = run({});
+assert.equal(finalDemo.status, 0, finalDemo.stderr);
+console.log('PASS stage 4: metadata, demo privacy, absolute canonical, static assets, deployment guards');
