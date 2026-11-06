@@ -56,6 +56,6 @@ export function renderSite(html,css,data) {
     .replace(/#eeeae1/gi,'var(--services-bg)')
     .replace(/#eae7de/gi,'var(--faq-bg)');
   const vars=Object.entries(colors).map(([key,variable])=>variable+'-configured:'+data.theme[key]+';').join('');
-  css=':root{'+vars+'}\n'+css;
+  css=':root{'+vars+'--dark:var(--dark-configured);--services-bg:var(--services-bg-configured);--faq-bg:var(--faq-bg-configured);}\n'+css;
   return {html,css};
 }
