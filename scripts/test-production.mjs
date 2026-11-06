@@ -23,6 +23,8 @@ await stat(new URL('../dist/assets/images/hero-studio.webp', import.meta.url));
 await stat(new URL('../dist/assets/favicon.svg', import.meta.url));
 await stat(new URL('../dist/config/contact.js', import.meta.url));
 await stat(new URL('../dist/configurator/index.html', import.meta.url));
+await stat(new URL('../dist/case-study/index.html', import.meta.url));
+await stat(new URL('../dist/case-study/case-study.css', import.meta.url));
 await stat(new URL('../dist/configurator/configurator.js', import.meta.url));
 await stat(new URL('../dist/configurator/configurator.css', import.meta.url));
 await stat(new URL('../dist/scripts/render-site.mjs', import.meta.url));
