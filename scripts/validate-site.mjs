@@ -84,6 +84,6 @@ export function validateSite(d){
     if(em.address.length>254||em.address.split('@')[0].length>64||em.address.split('@')[0].includes('..')||!emailPattern.test(em.address))
       throw new Error('contact.email.address must be a valid conventional ASCII email');
   }
-  const labels=['heroPrimary','heroSecondary','scrollCue','portfolioReadCase','portfolioPending','caseBack','caseIndex','servicesIndex','portfolioIndex','faqIndex','contactIndex','contactPanelTitle','contactPanelInfo','contactWhatsApp','contactEmail','contactUnavailable','contactHint'];
+  const labels=['heroPrimary','heroSecondary','scrollCue','portfolioReadCase','portfolioPending','caseBack','caseIndex','servicesIndex','portfolioIndex','faqIndex','contactIndex','contactPanelTitle','contactPanelInfo','contactWhatsApp','contactEmail','contactUnavailable','contactHint','contactActiveNote','contactActiveDemo','contactInactiveNote'];
   for(const key of labels)requireText(d.labels[key],'labels.'+key,{max:250});
 }
