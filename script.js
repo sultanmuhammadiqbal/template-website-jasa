@@ -79,11 +79,18 @@ if (document.querySelector('[data-contact-status]')) {
   const emailLink = document.querySelector('[data-contact-link="email"]');
   const contactUnavailable = document.querySelector('[data-contact-unavailable]');
   const contactStatus = document.querySelector('[data-contact-status]');
+  const contactDemo = document.querySelector('.contact-demo');
 
   const wa = contact.whatsapp || {};
   const email = contact.email || {};
   const validWhatsApp = wa.enabled === true && /^[1-9][0-9]{7,14}$/.test(String(wa.number || ''));
-  const validEmail = email.enabled === true && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email.address || ''));
+  // Accept conventional ASCII mailboxes and domains; reject URL delimiters/control characters.
+  const emailAddress = typeof email.address === 'string' ? email.address : '';
+  const emailPattern = /^[A-Za-z0-9](?:[A-Za-z0-9._+-]*[A-Za-z0-9])?@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
+  const localPart = emailAddress.split('@')[0];
+  const validEmail = email.enabled === true &&
+    emailAddress.length <= 254 && localPart.length <= 64 &&
+    !localPart.includes('..') && emailPattern.test(emailAddress);
 
   if (validWhatsApp) {
     const message = encodeURIComponent(String(wa.message || 'Halo, saya ingin berkonsultasi.'));
@@ -92,12 +99,13 @@ if (document.querySelector('[data-contact-status]')) {
   }
   if (validEmail) {
     const subject = encodeURIComponent(String(email.subject || 'Konsultasi'));
-    emailLink.href = 'mailto:' + email.address + '?subject=' + subject;
+    emailLink.href = 'mailto:' + emailAddress + '?subject=' + subject;
     emailLink.hidden = false;
   }
   if (validWhatsApp || validEmail) {
     contactUnavailable.hidden = true;
     contactStatus.textContent = 'Gunakan kontak yang tersedia untuk memulai percakapan.';
+    if (contactDemo) contactDemo.textContent = 'Saluran kontak aktif — identitas dan isi website tetap berupa demo.';
   } else {
     contactStatus.textContent = 'Kontak belum diaktifkan. Atur config/contact.js menggunakan data bisnis yang valid.';
   }
