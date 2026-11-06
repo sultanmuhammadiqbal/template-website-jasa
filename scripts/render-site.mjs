@@ -9,7 +9,7 @@ const colors={ink:'--ink',paper:'--paper',paperMuted:'--paper-muted',accent:'--a
 export function renderSite(html,css,data) {
   validateSite(data);
   const b=data.brand,s=data.services,p=data.portfolio,c=data.caseStudy,f=data.faq,ct=data.contact,l=data.labels;
-  html=html.replace(/<title>[^<]*<\/title>/,'<title>'+q(b.title)+'</title>');
+  html=html.replace(/<title>[^<]*<\/title>/,()=>'<title>'+q(b.title)+'</title>');
   html=html.replace(/(rel="preload" href=")[^"]*(")/,(_,pre,post)=>pre+q(b.heroImage)+post);
   html=html.replace(/(name="theme-color" content=")[^"]*(")/,(_,pre,post)=>pre+q(data.theme.dark)+post);
   html=html.replace(/(property="og:image:alt" content=")[^"]*(")/,(_,pre,post)=>pre+q(b.heroAlt)+post);
