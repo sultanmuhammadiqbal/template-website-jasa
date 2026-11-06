@@ -83,7 +83,7 @@ if (document.querySelector('[data-contact-status]')) {
   const wa = contact.whatsapp || {};
   const email = contact.email || {};
   const validWhatsApp = wa.enabled === true && /^[1-9][0-9]{7,14}$/.test(String(wa.number || ''));
-  const validEmail = email.enabled === true && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(email.address || ''));
+  const validEmail = email.enabled === true && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email.address || ''));
 
   if (validWhatsApp) {
     const message = encodeURIComponent(String(wa.message || 'Halo, saya ingin berkonsultasi.'));
