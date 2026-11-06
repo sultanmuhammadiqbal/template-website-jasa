@@ -11,7 +11,7 @@ assert.match(html,/hak aset/);
 assert.match(html,/belum disetujui untuk dijual/);
 assert.match(html,/bukan screenshot aktual/);
 assert.match(html,/42302718353/);
-assert.match(html,/MANIFEST/);
+assert.match(html,/manifest SHA-256/);
 assert.ok(css.includes('@media'));
 for(let n=1;n<=7;n++){
   const link='https://github.com/sultanmuhammadiqbal/template-website-jasa/pull/'+n;
