@@ -18,7 +18,7 @@ try{
     assert.equal(await page.locator('#export-button').isEnabled(),true);
     assert.equal(await page.locator('#preview-frame').contentFrame().locator('#hero-title').textContent(),'Ruang Reka');
     const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
-    assert.deepEqual(axe.violations.map(v=>v.id),[],'Configurator WCAG errors at '+width);
+    assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),[],'Configurator WCAG errors at '+width);
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
     assert.ok(overflow<=2,'Configurator horizontal overflow '+width);
     await page.screenshot({path:new URL('../artifacts/screenshots/configurator-'+width+'.png',import.meta.url).pathname,fullPage:true,animations:'disabled'});
