@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Template Configurator — Ruang Reka</title>
+  <meta name="description" content="Editor konfigurasi lokal untuk template website jasa Ruang Reka.">
+  <link rel="stylesheet" href="./configurator.css">
+</head>
+<body>
+  <a class="skip-link" href="#editor">Lewati ke editor</a>
+  <header class="topbar">
+    <div class="identity"><span class="logo" aria-hidden="true">RR</span><div><strong>Template Configurator</strong><small>Ruang Reka · Fase A2</small></div></div>
+    <div class="top-actions">
+      <a class="text-link" href="../">Lihat website demo</a>
+      <button type="button" id="reset-button" class="button secondary">Reset</button>
+      <button type="button" id="export-button" class="button primary" disabled>Ekspor JSON</button>
+    </div>
+  </header>
+  <main class="workspace">
+    <section class="sidebar" aria-label="Pengaturan template">
+      <div class="sidebar-heading"><p class="eyebrow">KONFIGURASI</p><h1>Rancang website klienmu.</h1><p>Ubah konten di sebelah kiri; lihat hasilnya langsung. Ekspor <code>site.json</code> saat semua pengaturan valid.</p></div>
+      <div id="status" role="status" aria-live="polite" class="status">Memuat konfigurasi…</div>
+      <div class="warning">Editor berjalan di browser. Perubahan tidak disimpan ke GitHub, tidak dikirim ke server, dan tidak mengubah website publik. Simpan hasil dengan Ekspor JSON.</div>
+      <div id="editor" class="editor" aria-label="Editor konfigurasi" tabindex="-1"></div>
+    </section>
+    <section class="preview-area" aria-labelledby="preview-title">
+      <div class="preview-toolbar"><div><p class="eyebrow">LIVE PREVIEW</p><h2 id="preview-title">Pratinjau website</h2></div><div class="viewport-switch" role="group" aria-label="Ukuran pratinjau"><button type="button" class="viewport-button is-active" data-viewport="desktop" aria-pressed="true">Desktop</button><button type="button" class="viewport-button" data-viewport="mobile" aria-pressed="false">Mobile</button></div></div>
+      <div class="preview-stage"><iframe id="preview-frame" title="Pratinjau website dengan konfigurasi saat ini" sandbox="allow-scripts" referrerpolicy="no-referrer" loading="eager"></iframe></div>
+      <p class="preview-note">Pratinjau memakai HTML/CSS dan renderer asli Ruang Reka. Saluran kontak hanyalah simulasi; periksa lagi setelah deployment.</p>
+    </section>
+  </main>
+  <script type="module" src="./configurator.js"></script>
+</body>
+</html>
