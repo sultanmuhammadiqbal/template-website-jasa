@@ -13,8 +13,8 @@ const checks = [
   ["gambar hero memiliki dimensi eksplisit", /<img[\s\S]*width="1672"[\s\S]*height="941"/.test(html)],
   ["CSS memiliki breakpoint mobile", css.includes("@media (max-width: 760px)")],
   ["CSS menghormati reduced motion", css.includes("prefers-reduced-motion")],
-  ["menu memperbarui aria-expanded", js.includes('setAttribute("aria-expanded"')],
-  ["menu dapat ditutup dengan Escape", js.includes('event.key === "Escape"')],
+  ["menu memperbarui aria-expanded", /setAttribute\(['\"]aria-expanded['\"]/.test(js)],
+  ["menu dapat ditutup dengan Escape", /event.key === ['\"]Escape['\"]/.test(js)],
   ["konten belakang menu tidak dapat difokuskan", js.includes("main.inert")],
 ];
 
