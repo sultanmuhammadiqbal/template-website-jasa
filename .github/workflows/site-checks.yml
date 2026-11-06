@@ -30,6 +30,7 @@ jobs:
           node --check scripts/test-custom-browser.mjs
           node --check scripts/test-configurator-browser.mjs
           node --check scripts/test-arunika-package-browser.mjs
+          node --check scripts/test-case-study-browser.mjs
           node --check configurator/configurator.js
           node --check scripts/test-template.mjs
           node --check scripts/test-production.mjs
@@ -66,6 +67,7 @@ jobs:
           node scripts/test-custom-browser.mjs
           node scripts/test-configurator-browser.mjs
           node scripts/test-arunika-package-browser.mjs
+          node scripts/test-case-study-browser.mjs
       - name: Lighthouse baseline report
         run: |
           mkdir -p artifacts
