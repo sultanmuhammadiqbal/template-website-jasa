@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, feat/tahap-2-layanan-portofolio]
+    branches: [main, 'feat/**']
 
 jobs:
   test:
@@ -23,6 +23,8 @@ jobs:
           node --check scripts/test-menu.mjs
           node --check scripts/test-stage2.mjs
           node --check scripts/test-browser.mjs
+          node --check scripts/test-stage3-browser.mjs
+          node --check config/contact.js
       - name: Run all tests
         run: npm test
       - name: Install Playwright and Chromium
@@ -35,3 +37,4 @@ jobs:
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           node scripts/test-browser.mjs
+          node scripts/test-stage3-browser.mjs
