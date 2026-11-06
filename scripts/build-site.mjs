@@ -1,3 +1,4 @@
+import { renderSite } from './render-site.mjs';
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -19,6 +20,7 @@ if (wantsIndexing && !siteURL) {
   throw new Error('ENABLE_INDEXING=true requires SITE_URL for canonical and sharing metadata');
 }
 
+const config = JSON.parse(await readFile(join(root, 'config/site.json'),'utf8'));
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 for (const path of ['styles.css', 'script.js']) {
@@ -28,6 +30,13 @@ for (const path of ['assets', 'config']) {
   await cp(join(root, path), join(dist, path), { recursive: true });
 }
 let html = await readFile(join(root, 'index.html'), 'utf8');
+let css = await readFile(join(root, 'styles.css'), 'utf8');
+({ html, css } = renderSite(html, css, config));
+await writeFile(join(dist, 'styles.css'), css);
+await writeFile(join(dist, 'config/contact.js'), 'window.RUANG_REKA_CONTACT = Object.freeze(' + JSON.stringify({
+  whatsapp: config.contact.whatsapp,
+  email: config.contact.email
+}) + ');\n');
 const meta = [];
 if (siteURL) {
   const absoluteHero = siteURL + '/assets/images/hero-studio.webp';
