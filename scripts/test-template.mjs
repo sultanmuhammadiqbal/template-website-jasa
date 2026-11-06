@@ -55,7 +55,7 @@ for(const [field,value] of [['accent','#bad'],['dark','red'],['white','url(https
 }
 const invalidArt=structuredClone(config);
 invalidArt.portfolio.items[0].art='evil-string';
-assert.throws(()=>renderSite(sourceHTML,sourceCSS,invalidArt),/Unknown art style/);
+assert.throws(()=>renderSite(sourceHTML,sourceCSS,invalidArt),/portfolio.items\[0\].art/);
 
 for(const special of ['Studio $& Baru',"Studio $' Baru",'Studio $'+'\x60'+' Baru']) {
   const changed=structuredClone(config);
