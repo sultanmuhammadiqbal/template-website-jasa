@@ -39,7 +39,8 @@ await writeFile(join(dist, 'assets/favicon.svg'),
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="9" fill="' + config.theme.dark + '"/><text x="32" y="39" fill="' + config.theme.accent + '" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="21">' + safeXML(brandMark) + '</text></svg>\n');
 await writeFile(join(dist, 'config/contact.js'), 'window.RUANG_REKA_CONTACT = Object.freeze(' + JSON.stringify({
   whatsapp: config.contact.whatsapp,
-  email: config.contact.email
+  email: config.contact.email,
+  labels: {activeNote:config.labels.contactActiveNote,activeDemo:config.labels.contactActiveDemo,inactiveNote:config.labels.contactInactiveNote}
 }) + ');\n');
 const meta = [];
 if (siteURL) {
