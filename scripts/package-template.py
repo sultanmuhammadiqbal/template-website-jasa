@@ -21,7 +21,7 @@ EXACT = [
     "scripts/test-stage2.mjs", "scripts/test-production.mjs",
     "scripts/test-template.mjs",
     "examples/studio-arunika.site.json",
-    "buyer/README-PEMBELI.md", "buyer/LICENSE-DRAFT.md",
+    "buyer/README-PEMBELI.md", "buyer/RENCANA-PENJUALAN.md", "buyer/LICENSE-DRAFT.md",
     "buyer/CHECKLIST-LAUNCH.md", "buyer/CONTENT-RIGHTS.md",
 ]
 ASSETS_DIR = ROOT / "assets"
