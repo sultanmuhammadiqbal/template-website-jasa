@@ -22,5 +22,16 @@ jobs:
           node --check scripts/check-site.mjs
           node --check scripts/test-menu.mjs
           node --check scripts/test-stage2.mjs
+          node --check scripts/test-browser.mjs
       - name: Run all tests
         run: npm test
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Browser responsive and accessibility tests
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ruang-reka-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          node scripts/test-browser.mjs
