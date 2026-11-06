@@ -148,6 +148,9 @@
     "contactWhatsApp": "Chat melalui WhatsApp",
     "contactEmail": "Kirim email",
     "contactUnavailable": "WhatsApp dan email demo belum diaktifkan.",
-    "contactHint": "Atur konfigurasi kontak untuk mengaktifkan tautan."
+    "contactHint": "Atur konfigurasi kontak untuk mengaktifkan tautan.",
+    "contactActiveNote": "Gunakan kontak yang tersedia untuk memulai percakapan.",
+    "contactActiveDemo": "Saluran kontak aktif — identitas dan isi website tetap berupa demo.",
+    "contactInactiveNote": "Kontak belum diaktifkan. Atur kontak di config/site.json menggunakan data bisnis yang valid."
   }
 }
