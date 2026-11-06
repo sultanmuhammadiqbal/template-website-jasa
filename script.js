@@ -70,3 +70,33 @@ syncViewport();
 const updateHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
+
+
+// Contact links remain disabled until explicitly configured with real business details.
+const contact = window.RUANG_REKA_CONTACT || {};
+const whatsappLink = document.querySelector('[data-contact-link="whatsapp"]');
+const emailLink = document.querySelector('[data-contact-link="email"]');
+const contactUnavailable = document.querySelector('[data-contact-unavailable]');
+const contactStatus = document.querySelector('[data-contact-status]');
+
+const wa = contact.whatsapp || {};
+const email = contact.email || {};
+const validWhatsApp = wa.enabled === true && /^[1-9][0-9]{7,14}$/.test(String(wa.number || ''));
+const validEmail = email.enabled === true && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(email.address || ''));
+
+if (validWhatsApp) {
+  const message = encodeURIComponent(String(wa.message || 'Halo, saya ingin berkonsultasi.'));
+  whatsappLink.href = 'https://wa.me/' + wa.number + '?text=' + message;
+  whatsappLink.hidden = false;
+}
+if (validEmail) {
+  const subject = encodeURIComponent(String(email.subject || 'Konsultasi'));
+  emailLink.href = 'mailto:' + email.address + '?subject=' + subject;
+  emailLink.hidden = false;
+}
+if (validWhatsApp || validEmail) {
+  contactUnavailable.hidden = true;
+  contactStatus.textContent = 'Gunakan kontak yang tersedia untuk memulai percakapan.';
+} else {
+  contactStatus.textContent = 'Kontak belum diaktifkan. Atur config/contact.js menggunakan data bisnis yang valid.';
+}
