@@ -49,6 +49,9 @@ export function renderSite(html,css,data) {
     '<p class="contact-unavailable" data-contact-unavailable>WhatsApp dan email demo belum diaktifkan.</p></div>'+
     '<p class="contact-note" data-contact-status aria-live="polite">Atur konfigurasi kontak untuk mengaktifkan tautan.</p></div></div>');
   css=css.replace(/(--(?:ink|paper|paper-muted|accent|white):\s*)#[0-9a-f]{6}/gi,(full,prefix)=>prefix+'var('+prefix.match(/--[a-z-]+/)[0]+'-configured)');
+  css=css.replace(/#262d26/gi,'var(--dark)')
+    .replace(/#eeeae1/gi,'var(--services-bg)')
+    .replace(/#eae7de/gi,'var(--faq-bg)');
   const vars=Object.entries(colors).map(([key,variable])=>variable+'-configured:'+data.theme[key]+';').join('');
   css=':root{'+vars+'}\n'+css;
   return {html,css};
