@@ -130,3 +130,15 @@ Panduan pembeli, checklist peluncuran, hak penggunaan aset, dan **draf** ketentu
 ## Status
 
 Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge PR Fase A1 tetap wajib; demo bukan representasi bisnis sungguhan.
+
+## Fase B — Professional Portfolio Case Study
+
+Halaman studi kasus portofolio independen tersedia di `/case-study/` setelah menjalankan `npm run build` atau `npm run dev`. Implementasi berada pada `case-study/index.html` dan `case-study/case-study.css`; build menyalinnya sebagai subfolder terpisah dalam `dist/`. Homepage Ruang Reka dan konfigurasi demo tidak diubah.
+
+**Isi yang dapat diverifikasi:** ringkasan masalah, gambaran arsitektur, tujuh tonggak pengembangan dengan tautan PR #1–7, pengembangan berbantuan AI (tanpa mengklaim porsi kontribusi numerik), hasil CI PR #7, dan pembatasan legal produk. Ilustrasi pada hero dibuat dengan CSS dan dilabeli sebagai ilustrasi konseptual, bukan screenshot aktual.
+
+**Quality gate:** `scripts/test-case-study-browser.mjs` menguji viewport 320, 375, 768, 1280 piksel; link internal, keterbacaan layout, larangan indexing, bukti tautan PR, dan axe WCAG otomatis. Screenshot 375 dan 1280 px diunggah ke GitHub Actions.
+
+**Catatan publikasi:** semua angka Lighthouse pada halaman berasal dari pengujian sintetis CI, bukan klaim hasil untuk klien atau jaminan performa setiap lingkungan. Halaman demo dan studi kasus `noindex` secara default. Produk ZIP tetap kandidat: hak aset dan syarat lisensi komersial belum diverifikasi. Halaman bukan representasi proyek klien berbayar.
+
+---
