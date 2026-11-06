@@ -103,6 +103,22 @@ Bagian utama:
 
 **Batasan A1:** konfigurasi adalah JSON yang diedit manual, belum antarmuka admin atau CMS. Nama layanan dan FAQ fleksibel; ilustrasi saat ini memakai tiga gaya CSS yang tersedia. Seluruh kata-kata demo, foto, klaim fiktif, hak gambar, dan label portofolio harus ditinjau ulang sebelum digunakan untuk bisnis nyata. Pengaturan `noindex` pada demo tetap berlaku.
 
+## Fase A2 — Visual Template Configurator
+
+Buka `http://localhost:4173/configurator/` setelah menjalankan `npm run dev`. Configurator tersedia sebagai halaman **terpisah** dari homepage (tanpa tautan navigasi publik) dan tidak mengubah `config/site.json` secara langsung.
+
+- Edit identitas dan SEO, warna, layanan, portofolio, tahapan studi kasus, FAQ, kontak, serta label tombol.
+- Tambahkan/hapus item dinamis. Salah satu portofolio harus ditandai sebagai studi kasus; nama studi kasus ikut berubah ketika judul kartu yang terkait diedit.
+- Preview langsung merender struktur website menggunakan modul renderer dan validator produksi, dalam iframe sandbox. Mode desktop/mobile tersedia.
+- Konfigurasi tidak valid **tidak dapat diekspor**. Validasi memeriksa field wajib, format kontak, ilustrasi, serta pasangan warna WCAG.
+- Klik **Ekspor JSON** untuk mengunduh `site.json`. Salin secara manual untuk menggantikan `config/site.json` pada salinan proyek klien, jalankan `npm test` dan `npm run build`.
+- Tombol Reset mengembalikan data awal. Perubahan **tidak disimpan otomatis** dan tidak dikirim ke API/GitHub; ekspor terlebih dahulu sebelum meninggalkan halaman.
+- Preview memaksa semua tautan kontak nonaktif agar pengujian tidak membuka WhatsApp atau email milik klien. Kontak sebenarnya hanya aktif setelah JSON diekspor, diperiksa, dan di-build.
+- Pengaturan gambar hero masih memakai path aset `assets/images/*.webp`; unggah aset yang berlisensi ke repositori klien sebelum memakai path baru.
+- Halaman configurator tidak menyediakan autentikasi; jangan menaruh data rahasia atau informasi pribadi di konfigurasi. Untuk deployment klien, hapus `dist/configurator/` apabila tidak ingin mengirim editor ke publik. Ini bukan CMS atau antarmuka yang menyimpan perubahan.
+
+CI menguji layar configurator 375/1280 piksel, audit axe, penggantian brand dan warna, validasi error, dan struktur JSON hasil unduhan.
+
 ## Status
 
 Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge PR Fase A1 tetap wajib; demo bukan representasi bisnis sungguhan.
