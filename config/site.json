@@ -130,5 +130,24 @@
       "address": "",
       "subject": "Konsultasi desain interior Ruang Reka"
     }
+  },
+  "labels": {
+    "heroPrimary": "Mulai konsultasi",
+    "heroSecondary": "Lihat karya demo",
+    "scrollCue": "Jelajahi",
+    "portfolioReadCase": "Baca studi kasus",
+    "portfolioPending": "Studi kasus lengkap menyusul",
+    "caseBack": "Kembali ke portofolio",
+    "caseIndex": "04 / Studi kasus demo",
+    "servicesIndex": "02 / Layanan",
+    "portfolioIndex": "03 / Portofolio",
+    "faqIndex": "05 / Pertanyaan umum",
+    "contactIndex": "06 / Hubungi kami",
+    "contactPanelTitle": "Pilih cara menghubungi",
+    "contactPanelInfo": "Saluran aktif hanya akan muncul setelah konfigurasi menggunakan informasi bisnis yang valid.",
+    "contactWhatsApp": "Chat melalui WhatsApp",
+    "contactEmail": "Kirim email",
+    "contactUnavailable": "WhatsApp dan email demo belum diaktifkan.",
+    "contactHint": "Atur konfigurasi kontak untuk mengaktifkan tautan."
   }
 }
