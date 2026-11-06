@@ -17,7 +17,7 @@ try{
     await page.getByText('Konfigurasi valid', {exact:false}).waitFor();
     assert.equal(await page.locator('#export-button').isEnabled(),true);
     assert.equal(await page.locator('#preview-frame').contentFrame().locator('#hero-title').textContent(),'Ruang Reka');
-    const computed=await page.locator('#preview-frame').contentFrame().evaluate(()=>({section:getComputedStyle(document.querySelector('#studi-kasus')).backgroundColor, dark:getComputedStyle(document.documentElement).getPropertyValue('--dark'),darkConfigured:getComputedStyle(document.documentElement).getPropertyValue('--dark-configured'),styles:document.querySelectorAll('style').length,body:getComputedStyle(document.body).backgroundColor}));
+    const computed=await page.locator('#preview-frame').contentFrame().locator('#studi-kasus').evaluate(()=>({section:getComputedStyle(document.querySelector('#studi-kasus')).backgroundColor, dark:getComputedStyle(document.documentElement).getPropertyValue('--dark'),darkConfigured:getComputedStyle(document.documentElement).getPropertyValue('--dark-configured'),styles:document.querySelectorAll('style').length,body:getComputedStyle(document.body).backgroundColor}));
     console.log('PREVIEW DIAGNOSTIC '+width+': '+JSON.stringify(computed));
     const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
     assert.deepEqual(axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),[],'Configurator WCAG errors at '+width);
