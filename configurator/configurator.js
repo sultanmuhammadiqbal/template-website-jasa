@@ -237,7 +237,7 @@ editor.addEventListener('input',event=>{
       const picker=editor.querySelector('[data-color-picker="'+path[1]+'"]');
       if(picker)picker.value=el.value;
     }
-    if(path[0]==='portfolio'&&path[2]==='title'&&data.portfolio.items[path[1]].caseStudy)data.caseStudy.name=el.value;
+    if(path[0]==='portfolio'&&path[1]==='items'&&path[3]==='title'&&data.portfolio.items[path[2]].caseStudy)data.caseStudy.name=el.value;
   }
   schedulePreview();
 });
