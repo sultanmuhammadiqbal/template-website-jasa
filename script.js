@@ -70,3 +70,44 @@ syncViewport();
 const updateHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
+
+
+// Contact links remain disabled until explicitly configured with real business details.
+if (document.querySelector('[data-contact-status]')) {
+  const contact = window.RUANG_REKA_CONTACT || {};
+  const whatsappLink = document.querySelector('[data-contact-link="whatsapp"]');
+  const emailLink = document.querySelector('[data-contact-link="email"]');
+  const contactUnavailable = document.querySelector('[data-contact-unavailable]');
+  const contactStatus = document.querySelector('[data-contact-status]');
+  const contactDemo = document.querySelector('.contact-demo');
+
+  const wa = contact.whatsapp || {};
+  const email = contact.email || {};
+  const validWhatsApp = wa.enabled === true && /^[1-9][0-9]{7,14}$/.test(String(wa.number || ''));
+  // Accept conventional ASCII mailboxes and domains; reject URL delimiters/control characters.
+  const emailAddress = typeof email.address === 'string' ? email.address : '';
+  const emailPattern = /^[A-Za-z0-9](?:[A-Za-z0-9._+-]*[A-Za-z0-9])?@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
+  const localPart = emailAddress.split('@')[0];
+  const validEmail = email.enabled === true &&
+    emailAddress.length <= 254 && localPart.length <= 64 &&
+    !localPart.includes('..') && emailPattern.test(emailAddress);
+
+  if (validWhatsApp) {
+    const message = encodeURIComponent(String(wa.message || 'Halo, saya ingin berkonsultasi.'));
+    whatsappLink.href = 'https://wa.me/' + wa.number + '?text=' + message;
+    whatsappLink.hidden = false;
+  }
+  if (validEmail) {
+    const subject = encodeURIComponent(String(email.subject || 'Konsultasi'));
+    emailLink.href = 'mailto:' + emailAddress + '?subject=' + subject;
+    emailLink.hidden = false;
+  }
+  if (validWhatsApp || validEmail) {
+    contactUnavailable.hidden = true;
+    contactStatus.textContent = 'Gunakan kontak yang tersedia untuk memulai percakapan.';
+    if (contactDemo) contactDemo.textContent = 'Saluran kontak aktif — identitas dan isi website tetap berupa demo.';
+  } else {
+    contactStatus.textContent = 'Kontak belum diaktifkan. Atur config/contact.js menggunakan data bisnis yang valid.';
+  }
+
+}

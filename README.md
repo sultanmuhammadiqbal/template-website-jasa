@@ -40,6 +40,22 @@ npm test
 - Seluruh nama dan deskripsi proyek adalah demonstrasi dan harus diganti sebelum dipakai pada bisnis nyata.
 - Pengujian: `npm test` menjalankan pemeriksaan HTML/CSS statis, interaksi menu berbasis simulasi DOM, dan cek struktur tahap 2. GitHub Actions juga menjalankan Chromium/Playwright untuk tes responsivitas, navigasi mobile, dan kontras hover.
 
+## Konten tahap 3
+
+- FAQ: empat pertanyaan menggunakan elemen HTML `<details>` dan `<summary>`, terbuka melalui klik, Enter, atau Space; tidak memerlukan JavaScript tambahan.
+- Kontak: CTA WhatsApp dan email disembunyikan sampai konfigurasi diaktifkan dan alamat divalidasi. Pengunjung tidak diarahkan ke akun contoh yang tidak aktif.
+- Navigasi FAQ langsung menuju bagian `#faq`; CTA konsultasi menuju bagian `#kontak`.
+- CI: Chromium menguji FAQ via Enter/Space/Tab, overflow, menu mobile, status kontak, dan tautan kontak valid/tidak valid pada lima viewport.
+- Semua FAQ, layanan, portofolio, dan kontak adalah contoh; periksa ulang setiap klaim sebelum digunakan klien.
+
+### Mengaktifkan kontak untuk bisnis nyata
+
+Edit berkas `config/contact.js`. Atur `whatsapp.enabled` menjadi `true` dan `whatsapp.number` ke nomor WhatsApp aktif format internasional tanpa `+`, spasi, atau tanda baca (contoh format: `6281234567890`). Atur `email.enabled` menjadi `true` dan `email.address` ke alamat email bisnis yang valid. Isi `message` dan `subject` sesuai kebutuhan. Kedua saluran boleh diaktifkan terpisah; keduanya `false` secara default. Email dibatasi ke alamat ASCII konvensional dan tidak menerima karakter URL seperti `?`, `#`, `%`, spasi, atau baris baru; bila alamat bisnis memakai format internasional yang lebih kompleks, perlu penyesuaian validasi secara teruji. Saat setidaknya satu saluran aktif, pesan status akan berubah tetapi identitas dan konten bisnis tetap dilabeli demo.
+
+> Jangan gunakan data bisnis fiktif atau nomor telepon milik orang lain. Website ini tidak memiliki backend/formulir pengiriman pesan; tombol hanya membuka WhatsApp atau aplikasi email jika telah dikonfigurasi.
+
+Jalankan `npm test` untuk pengujian statis. Browser tests dijalankan di GitHub Actions menggunakan Playwright/Chromium; untuk manual, pasang Playwright yang sesuai, jalankan `npm run dev`, kemudian `node scripts/test-browser.mjs` dan `node scripts/test-stage3-browser.mjs`.
+
 ## Status
 
-Tahap 1 dan tahap 2 selesai secara implementasi. Navigasi Layanan dan Karya mengarah ke bagian nyata. Menu 'Berikutnya' menuju bagian penanda untuk tahap 3; FAQ akan ditambahkan saat itu.
+Tahap 1–3 selesai secara implementasi. Tahap 4 berfokus pada SEO/social metadata, audit aksesibilitas dan performa, serta pengujian visual lanjutan.
