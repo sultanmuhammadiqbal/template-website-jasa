@@ -18,6 +18,10 @@ Terima kasih sudah mencoba template website jasa statis berbasis Ruang Reka. Ini
 
 Buka `examples/studio-arunika.site.json`. Semua nama dan proyek pada contoh **fiktif**. Untuk mencoba tanpa mengubah default, buat cadangan `config/site.json`, salin contoh ke sana, kemudian jalankan `npm run build`. Kembalikan file asli setelah mencoba.
 
+## Integritas ZIP dan manifest
+
+ZIP menyertakan `MANIFEST.sha256.json` berisi path, ukuran, dan SHA-256 setiap file sumber. Cocokkan isi ZIP dengan manifest sebelum mendistribusikan ulang. Manifest bukan tanda tangan digital atau bukti hak cipta; periksa identitas pengirim dan sumber unduhan secara terpisah. Dokumen strategi penjualan internal tidak disertakan di ZIP.
+
 ## Struktur paket
 
 - `index.html`, `styles.css`, `script.js`: sumber halaman utama.
