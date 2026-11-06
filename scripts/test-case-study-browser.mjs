@@ -8,7 +8,7 @@ const css = await readFile(new URL('../dist/case-study/case-study.css', import.m
 assert.match(html,/name="robots" content="noindex,nofollow"/);
 assert.match(html,/AI sebagai/);
 assert.match(html,/hak aset/);
-assert.match(html,/belum disetujui untuk dijual/);
+assert.match(html,/belum disetujui untuk dijual/i);
 assert.match(html,/bukan screenshot aktual/);
 assert.match(html,/42302718353/);
 assert.match(html,/manifest SHA-256/);
