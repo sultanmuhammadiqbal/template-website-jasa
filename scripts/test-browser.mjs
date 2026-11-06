@@ -26,7 +26,7 @@ try {
     assert.ok(metrics.cards, 'Card outside viewport at ' + width + 'px');
     if (width <= 600) assert.equal(metrics.portfolioColumns, 1, 'Expected single column at ' + width + 'px');
 
-    await page.locator('a[href="#portofolio"]').first().click();
+    await page.locator('.hero-actions a[href="#portofolio"]').click();
     assert.equal(new URL(page.url()).hash, '#portofolio', 'Portfolio anchor failed at ' + width + 'px');
 
     if (width <= 760) {
