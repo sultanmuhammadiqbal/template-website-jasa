@@ -55,7 +55,7 @@ try{
       await page.getByText('Konfigurasi valid',{exact:false}).waitFor();
       const contact=page.locator('details[data-section="contact"]');
       await contact.locator('summary').click();
-      await page.locator('#input-contact-whatsapp-message').fill('Pesan       const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#export-button').click()]); <b>aman</b>');
+      await page.locator('#input-contact-whatsapp-message').fill('Pesan $& <b>aman</b>');
       await page.getByText('Konfigurasi valid',{exact:false}).waitFor();
       assert.deepEqual(errors,[],'Preview runtime handles special replacement tokens');
       const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#export-button').click()]);
@@ -66,7 +66,7 @@ try{
       assert.equal(data.brand.name,'Studio Arunika $&');
       assert.equal(data.theme.accent,'#d0eb7a');
       assert.equal(data.caseStudy.name,'Rumah Senja Baru');
-      assert.equal(data.contact.whatsapp.message,'Pesan assert.equal(data.theme.accent,'#d4ef7d'); <b>aman</b>');
+      assert.equal(data.contact.whatsapp.message,'Pesan $& <b>aman</b>');
       assert.equal(data.services.items.length,4);
       assert.equal(data.portfolio.items.filter(x=>x.caseStudy).length,1);
       assert.equal(data.caseStudy.name,data.portfolio.items.find(x=>x.caseStudy).title);
