@@ -42,26 +42,15 @@ try {
 
   const page = await browser.newPage({ viewport: { width: 1024, height: 900 } });
   await page.goto(baseURL);
-  const contrast = await page.locator('.case-back').evaluate(el => {
-    const css = getComputedStyle(el);
-    const bg = getComputedStyle(document.querySelector('.case-study-section')).backgroundColor;
-    function relative(rgb) {
-      const parts = rgb.match(/[\\d.]+/g).slice(0, 3).map(v => Number(v)/255);
-      return parts.map(v => v <= 0.04045 ? v/12.92 : ((v+0.055)/1.055)**2.4)
-        .reduce((s,v,i) => s + v*[0.2126,0.7152,0.0722][i],0);
-    }
-    const before = css.color;
-    el.dispatchEvent(new MouseEvent('mouseover', { bubbles:true }));
-    return { before, bg };
-  });
+  const background = await page.locator('.case-study-section').evaluate(el => getComputedStyle(el).backgroundColor);
   await page.locator('.case-back').hover();
   const hoverColor = await page.locator('.case-back').evaluate(el => getComputedStyle(el).color);
   function luminance(rgb) {
-    const parts = rgb.match(/[\\d.]+/g).slice(0, 3).map(v => Number(v)/255);
+    const parts = rgb.match(/[\d.]+/g).slice(0, 3).map(v => Number(v)/255);
     return parts.map(v => v <= 0.04045 ? v/12.92 : ((v+0.055)/1.055)**2.4)
       .reduce((s,v,i) => s + v*[0.2126,0.7152,0.0722][i],0);
   }
-  const a = luminance(hoverColor), b = luminance(contrast.bg);
+  const a = luminance(hoverColor), b = luminance(background);
   const ratio = (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
   assert.ok(ratio >= 4.5, 'Case-study link hover contrast below WCAG AA: ' + ratio.toFixed(2));
   console.log('PASS hover contrast ' + ratio.toFixed(2) + ':1');
