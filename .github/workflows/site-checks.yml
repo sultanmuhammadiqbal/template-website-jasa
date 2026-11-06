@@ -25,16 +25,39 @@ jobs:
           node --check scripts/test-browser.mjs
           node --check scripts/test-stage3-browser.mjs
           node --check config/contact.js
+          node --check scripts/build-site.mjs
+          node --check scripts/test-production.mjs
+          node --check scripts/audit-browser.mjs
+          node --check scripts/report-lighthouse.mjs
       - name: Run all tests
         run: npm test
       - name: Install Playwright and Chromium
         run: |
-          npm install --no-save --package-lock=false playwright@1.56.1
+          npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2 lighthouse@12
           npx playwright install --with-deps chromium
+      - name: Build demo distribution
+        run: npm run build
       - name: Browser responsive and accessibility tests
         run: |
-          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ruang-reka-server.log 2>&1 &
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/ruang-reka-server.log 2>&1 &
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           node scripts/test-browser.mjs
           node scripts/test-stage3-browser.mjs
+          node scripts/audit-browser.mjs
+      - name: Lighthouse baseline report
+        run: |
+          mkdir -p artifacts
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/ruang-reka-lighthouse.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          export CHROME_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          npx lighthouse http://127.0.0.1:4173/ --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path=artifacts/lighthouse.json --quiet
+          node scripts/report-lighthouse.mjs
+      - name: Upload responsive screenshots and Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ruang-reka-stage4-audits
+          path: artifacts/
+          if-no-files-found: warn

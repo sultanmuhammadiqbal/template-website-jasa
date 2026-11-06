@@ -1,0 +1,45 @@
+import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+const dist = join(root, 'dist');
+const rawURL = (process.env.SITE_URL || '').trim();
+const wantsIndexing = process.env.ENABLE_INDEXING === 'true';
+
+let siteURL = null;
+if (rawURL) {
+  const parsed = new URL(rawURL);
+  if (parsed.protocol !== 'https:' || parsed.username || parsed.password || parsed.search || parsed.hash || parsed.pathname !== '/' || !parsed.hostname.includes('.')) {
+    throw new Error('SITE_URL must be a public HTTPS origin, e.g. https://studio.example.org');
+  }
+  siteURL = parsed.origin;
+}
+if (wantsIndexing && !siteURL) {
+  throw new Error('ENABLE_INDEXING=true requires SITE_URL for canonical and sharing metadata');
+}
+
+await rm(dist, { recursive: true, force: true });
+await mkdir(dist, { recursive: true });
+for (const path of ['styles.css', 'script.js']) {
+  await cp(join(root, path), join(dist, path));
+}
+for (const path of ['assets', 'config']) {
+  await cp(join(root, path), join(dist, path), { recursive: true });
+}
+let html = await readFile(join(root, 'index.html'), 'utf8');
+const meta = [];
+if (siteURL) {
+  const absoluteHero = siteURL + '/assets/images/hero-studio.webp';
+  const escapeAttr = str => str.replaceAll('&', '&amp;').replaceAll('"', '&quot;');
+  meta.push('<link rel="canonical" href="' + escapeAttr(siteURL + '/') + '" />');
+  meta.push('<meta property="og:url" content="' + escapeAttr(siteURL + '/') + '" />');
+  meta.push('<meta property="og:image" content="' + escapeAttr(absoluteHero) + '" />');
+  meta.push('<meta name="twitter:image" content="' + escapeAttr(absoluteHero) + '" />');
+}
+if (wantsIndexing) {
+  html = html.replace('<meta name="robots" content="noindex, nofollow" />', '<meta name="robots" content="index, follow" />');
+}
+html = html.replace('  </head>', meta.map(line => '    ' + line).join('\n') + (meta.length ? '\n' : '') + '  </head>');
+await writeFile(join(dist, 'index.html'), html);
+console.log('Built dist/ (' + (siteURL || 'unconfigured demo URL') + '; indexing ' + (wantsIndexing ? 'enabled' : 'disabled') + ')');
