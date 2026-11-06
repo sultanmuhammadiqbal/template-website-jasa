@@ -26,9 +26,12 @@ await mkdir(dist, { recursive: true });
 for (const path of ['styles.css', 'script.js']) {
   await cp(join(root, path), join(dist, path));
 }
-for (const path of ['assets', 'config']) {
+for (const path of ['assets', 'config', 'configurator']) {
   await cp(join(root, path), join(dist, path), { recursive: true });
 }
+// The editor imports the same renderer and validator used during production builds.
+await mkdir(join(dist, 'scripts'), { recursive:true });
+for(const file of ['render-site.mjs','validate-site.mjs']) await cp(join(root,'scripts',file),join(dist,'scripts',file));
 let html = await readFile(join(root, 'index.html'), 'utf8');
 let css = await readFile(join(root, 'styles.css'), 'utf8');
 ({ html, css } = renderSite(html, css, config));
