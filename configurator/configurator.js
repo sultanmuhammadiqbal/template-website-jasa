@@ -77,7 +77,7 @@ function colorField(key){
   const row=node('div',{className:'color-row'});
   const picker=document.createElement('input');picker.type='color';picker.value=data.theme[key];picker.dataset.colorPicker=key;
   picker.setAttribute('aria-label','Pilih warna '+paletteLabels[key]);
-  const textbox=document.createElement('input');textbox.type='text';textbox.value=data.theme[key];textbox.dataset.path=pathKey(['theme',key]);textbox.setAttribute('aria-label','Kode hex '+paletteLabels[key]);textbox.maxLength=7;
+  const textbox=document.createElement('input');textbox.type='text';textbox.id='input-theme-'+key;label.htmlFor=textbox.id;textbox.value=data.theme[key];textbox.dataset.path=pathKey(['theme',key]);textbox.setAttribute('aria-label','Kode hex '+paletteLabels[key]);textbox.maxLength=7;
   row.append(picker,textbox);wrap.append(row);return wrap;
 }
 function control(text,click,extra=''){
