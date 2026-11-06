@@ -56,6 +56,25 @@ Edit berkas `config/contact.js`. Atur `whatsapp.enabled` menjadi `true` dan `wha
 
 Jalankan `npm test` untuk pengujian statis. Browser tests dijalankan di GitHub Actions menggunakan Playwright/Chromium; untuk manual, pasang Playwright yang sesuai, jalankan `npm run dev`, kemudian `node scripts/test-browser.mjs` dan `node scripts/test-stage3-browser.mjs`.
 
+## Tahap 4 — production readiness
+
+- SEO dasar: judul, deskripsi, bahasa Indonesia, Open Graph, Twitter card, favicon SVG, dan metadata tema.
+- Secara default, demo memakai `noindex, nofollow` agar konten dan bisnis fiktif tidak terindeks sebagai bisnis nyata.
+- `npm run build` membuat paket statis di `dist/` termasuk HTML, CSS, JS, dan aset lokal. Tanpa `SITE_URL`, build mempertahankan `noindex` dan tidak memasang canonical/URL gambar sosial yang keliru.
+- Untuk deployment publik **setelah konten demo diganti dengan bisnis yang sah**, atur `SITE_URL` ke origin HTTPS sesungguhnya dan `ENABLE_INDEXING=true` secara eksplisit. Contoh perintah memakai alamat uji: `SITE_URL=https://studio.example.org ENABLE_INDEXING=true npm run build`. Ini menghasilkan canonical, `og:url`, `og:image` dan `twitter:image` absolut.
+- Jangan mengaktifkan indexing sebelum mengganti identitas, portofolio, FAQ, kontak, dan klaim contoh. Pastikan domain final valid dan HTTPS serta file `/assets/images/hero-studio.webp` tersedia pada URL yang sama.
+- `npm test` menguji default `noindex`, pencegahan publikasi tanpa domain, URL absolut, dan aset di `dist/` selain tes lama.
+- GitHub Actions menjalankan Playwright pada 320/375/768/1024/1440 piksel, axe-core untuk WCAG 2.0/2.1 A/AA, screenshot setiap viewport, serta laporan Lighthouse. Artefak audit diunggah dari setiap run.
+- Lighthouse SEO pada demo lokal tidak mencerminkan kesiapan indexing karena `noindex` disengaja; performa dari CI adalah baseline sintetis, bukan pengganti Core Web Vitals pengguna sungguhan.
+
+### Checklist publikasi
+
+1. Ganti seluruh konten/portofolio ilustratif dengan materi yang punya hak penggunaan; verifikasi hak dan izin foto.
+2. Aktifkan kontak valid di `config/contact.js` serta cek pesan status.
+3. Konfirmasi domain HTTPS, canonical, gambar share, dan `ENABLE_INDEXING`.
+4. Tinjau hasil screenshot & Lighthouse, lalu uji manual keyboard dan screen reader.
+5. Pastikan konfigurasi HTTPS, cache/compression, security headers dan 404 dilakukan di penyedia hosting; website ini statis tanpa backend.
+
 ## Status
 
-Tahap 1–3 selesai secara implementasi. Tahap 4 berfokus pada SEO/social metadata, audit aksesibilitas dan performa, serta pengujian visual lanjutan.
+Tahap 1–4 diimplementasikan. Review dan persetujuan merge tahap 4 tetap wajib; demo bukan representasi bisnis sungguhan.
