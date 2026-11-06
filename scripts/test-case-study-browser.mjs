@@ -10,6 +10,14 @@ assert.match(html,/AI sebagai/);
 assert.match(html,/hak aset/);
 assert.match(html,/belum disetujui untuk dijual/i);
 assert.match(html,/bukan screenshot aktual/);
+assert.match(html, /class="hero-art" role="img" aria-label="Ilustrasi konseptual/);
+assert.match(html, /Lighthouse Performance<br>homepage demo · CI/);
+assert.match(html, /Lighthouse Accessibility<br>homepage demo · CI/);
+assert.match(html, /bukan skor halaman studi kasus ini/);
+const externalBlankLinks = [...html.matchAll(/<a\\b[^>]*target="_blank"[^>]*>/g)].map(match=>match[0]);
+assert.ok(externalBlankLinks.length > 0);
+for(const tag of externalBlankLinks) assert.match(tag,/rel="noopener noreferrer"/);
+
 assert.match(html,/42302718353/);
 assert.match(html,/manifest SHA-256/);
 assert.ok(css.includes('@media'));
@@ -32,6 +40,10 @@ try{
     assert.equal(await page.title(),'Ruang Reka — Product Engineering Case Study');
     assert.equal(await page.locator('.milestone').count(),7);
     assert.equal(await page.locator('h1').count(),1);
+    const heroArt=page.getByRole('img',{name:/Ilustrasi konseptual antarmuka website Ruang Reka/});
+    assert.equal(await heroArt.count(),1,'Hero artwork must be a single accessible image');
+    assert.equal(await page.getByRole('img',{name:/bukan screenshot aktual/}).count(),1);
+    assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'),'noindex,nofollow');
     const metrics=await page.evaluate(()=>({
       overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
       width:document.documentElement.clientWidth,
