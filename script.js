@@ -107,7 +107,7 @@ if (document.querySelector('[data-contact-status]')) {
     contactStatus.textContent = 'Gunakan kontak yang tersedia untuk memulai percakapan.';
     if (contactDemo) contactDemo.textContent = 'Saluran kontak aktif — identitas dan isi website tetap berupa demo.';
   } else {
-    contactStatus.textContent = 'Kontak belum diaktifkan. Atur config/contact.js menggunakan data bisnis yang valid.';
+    contactStatus.textContent = 'Kontak belum diaktifkan. Atur kontak di config/site.json menggunakan data bisnis yang valid.';
   }
 
 }
