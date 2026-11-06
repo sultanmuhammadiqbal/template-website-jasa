@@ -17,7 +17,7 @@ assert.match(result.html,/id="kontak"/);
 assert.match(result.html,/aria-labelledby="faq-title"/);
 assert.match(result.css,/--accent-configured:#d8f15f/);
 assert.match(result.css,/--dark-configured:#262d26/);
-assert.match(result.css,/background:var\(--services-bg\)/);
+assert.match(result.css,/background:\s*var\(--services-bg\)/);
 
 const custom = structuredClone(config);
 custom.brand.name='Studio Arunika';
