@@ -30,6 +30,7 @@ jobs:
           node --check scripts/test-custom-browser.mjs
           node --check scripts/test-configurator-browser.mjs
           node --check scripts/test-arunika-package-browser.mjs
+          node --check scripts/test-case-study-browser.mjs
           node --check configurator/configurator.js
           node --check scripts/test-template.mjs
           node --check scripts/test-production.mjs
@@ -66,6 +67,7 @@ jobs:
           node scripts/test-custom-browser.mjs
           node scripts/test-configurator-browser.mjs
           node scripts/test-arunika-package-browser.mjs
+          node scripts/test-case-study-browser.mjs
       - name: Lighthouse baseline report
         run: |
           mkdir -p artifacts
@@ -75,6 +77,15 @@ jobs:
           export CHROME_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           npx lighthouse http://127.0.0.1:4173/ --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path=artifacts/lighthouse.json --quiet
           node scripts/report-lighthouse.mjs
+      - name: Dedicated case study Lighthouse audit
+        run: |
+          mkdir -p artifacts
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/ruang-reka-case-lighthouse.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          export CHROME_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          npx lighthouse http://127.0.0.1:4173/case-study/ --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path=artifacts/case-study-lighthouse.json --quiet
+          node scripts/report-lighthouse.mjs artifacts/case-study-lighthouse.json "CASE-STUDY LIGHTHOUSE"
       - name: Upload responsive screenshots and Lighthouse report
         if: always()
         uses: actions/upload-artifact@v4

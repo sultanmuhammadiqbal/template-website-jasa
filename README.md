@@ -129,4 +129,16 @@ Panduan pembeli, checklist peluncuran, hak penggunaan aset, dan **draf** ketentu
 
 ## Status
 
-Tahap 1–4 dan fondasi productization A1 telah diimplementasikan. Review dan persetujuan merge PR Fase A1 tetap wajib; demo bukan representasi bisnis sungguhan.
+Tahap 1–4 dan Fase A1 (Template Engine), A2 (Visual Configurator), serta A3 (paket kandidat) sudah digabung ke `main` melalui PR #1–7. Fase B Professional Portfolio Case Study sedang dalam PR #8 dan **belum di-merge**. Demo tidak mewakili bisnis atau klien nyata. Paket A3 belum mendapat izin penjualan karena hak aset dan lisensi final belum diverifikasi.
+
+## Fase B — Professional Portfolio Case Study
+
+Halaman studi kasus portofolio independen tersedia di `/case-study/` setelah menjalankan `npm run build` atau `npm run dev`. Implementasi berada pada `case-study/index.html` dan `case-study/case-study.css`; build menyalinnya sebagai subfolder terpisah dalam `dist/`. Homepage Ruang Reka dan konfigurasi demo tidak diubah.
+
+**Isi yang dapat diverifikasi:** ringkasan masalah, gambaran arsitektur, tujuh tonggak pengembangan dengan tautan PR #1–7, pengembangan berbantuan AI (tanpa mengklaim porsi kontribusi numerik), hasil CI PR #7, dan pembatasan legal produk. Ilustrasi pada hero dibuat dengan CSS dan dilabeli sebagai ilustrasi konseptual, bukan screenshot aktual.
+
+**Quality gate:** `scripts/test-case-study-browser.mjs` menguji viewport 320, 375, 768, 1280 piksel; link internal, keterbacaan layout, larangan indexing, bukti tautan PR, semantik ilustrasi, dan axe WCAG otomatis. Screenshot 375 dan 1280 px diunggah ke GitHub Actions. Lighthouse berjalan terpisah untuk homepage demo dan `/case-study/`; hasilnya diberi label terpisah di log dan artifact CI. Lihat checklist `case-study/QA-MANUAL.md` untuk audit yang tidak dapat digantikan tes otomatis.
+
+**Catatan publikasi:** angka Lighthouse 100/100 yang ditampilkan pada halaman merujuk pada **homepage demo** di CI PR #7; audit khusus `/case-study/` adalah pengukuran terpisah pada CI PR #8. Semua skor adalah pengujian sintetis CI, bukan klaim hasil untuk klien atau jaminan performa setiap lingkungan. Halaman demo dan studi kasus `noindex` secara default. Produk ZIP tetap kandidat: hak aset dan syarat lisensi komersial belum diverifikasi. Halaman bukan representasi proyek klien berbayar.
+
+---

@@ -1,5 +1,5 @@
 import { renderSite } from './render-site.mjs';
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
@@ -28,6 +28,13 @@ for (const path of ['styles.css', 'script.js']) {
 }
 for (const path of ['assets', 'config', 'configurator']) {
   await cp(join(root, path), join(dist, path), { recursive: true });
+}
+// The engineering portfolio is repository-specific; customer ZIPs omit it by design.
+try {
+  await access(join(root, 'case-study', 'index.html'));
+  await cp(join(root, 'case-study'), join(dist, 'case-study'), { recursive: true });
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
 }
 // The editor imports the same renderer and validator used during production builds.
 await mkdir(join(dist, 'scripts'), { recursive:true });
