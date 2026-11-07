@@ -6,7 +6,7 @@ import AxeBuilder from '@axe-core/playwright';
 const html = await readFile(new URL('../dist/case-study/index.html', import.meta.url),'utf8');
 const css = await readFile(new URL('../dist/case-study/case-study.css', import.meta.url),'utf8');
 assert.match(html,/name="robots" content="noindex,nofollow"/);
-assert.match(html,/AI sebagai/);
+assert.match(html,/AI sebagai/);\nassert.match(html, /<link rel="icon" href="\.\.\/assets\/favicon\.svg" type="image\/svg\+xml">/);
 assert.match(html,/hak aset/);
 assert.match(html,/belum disetujui untuk dijual/i);
 assert.match(html,/bukan screenshot aktual/);
