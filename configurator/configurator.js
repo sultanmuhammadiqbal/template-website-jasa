@@ -4,6 +4,8 @@ import { validateSite, contrastRatio } from '../scripts/validate-site.mjs';
 const editor = document.querySelector('#editor');
 const status = document.querySelector('#status');
 const exportButton = document.querySelector('#export-button');
+const importButton = document.querySelector('#import-brief-button');
+const importFile = document.querySelector('#brief-config-file');
 const frame = document.querySelector('#preview-frame');
 const stage = document.querySelector('.preview-stage');
 let defaults;
@@ -255,6 +257,24 @@ document.querySelectorAll('.viewport-button').forEach(btn=>btn.addEventListener(
   const mobile=btn.dataset.viewport==='mobile';stage.classList.toggle('is-mobile',mobile);
   document.querySelectorAll('.viewport-button').forEach(b=>{const selected=b===btn;b.classList.toggle('is-active',selected);b.setAttribute('aria-pressed',String(selected))});
 }));
+importButton.addEventListener('click',()=>importFile.click());
+importFile.addEventListener('change',async()=>{
+  const file=importFile.files?.[0];
+  if(!file)return;
+  try{
+    if(file.size>256*1024)throw new Error('File konfigurasi melebihi batas 256 KB.');
+    const imported=JSON.parse(await file.text());
+    validateSite(imported);
+    data=structuredClone(imported);
+    buildEditor();
+    update();
+    status.textContent='Konfigurasi dari Brief to Proposal berhasil diimpor dan lolos validasi. Periksa seluruh konten, aset, warna, dan kontak sebelum ekspor/build.';
+  }catch(error){
+    status.classList.add('invalid');
+    status.textContent='Import ditolak: '+error.message;
+    exportButton.disabled=true;
+  }finally{importFile.value='';}
+});
 document.querySelector('#reset-button').addEventListener('click',()=>{
   if(!confirm('Kembalikan semua perubahan ke konfigurasi awal?'))return;
   data=structuredClone(defaults);buildEditor();update();
