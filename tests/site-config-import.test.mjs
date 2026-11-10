@@ -10,7 +10,7 @@ imported.contact.email.enabled=false;
 validateSite(imported);
 assert.equal(imported.brand.name,"Bengkel Rapi");
 const invalid=structuredClone(imported);
-invalid.theme.accent="#ffffff";
+invalid.theme.accent="#171916";
 assert.throws(()=>validateSite(invalid),/WCAG contrast/);
 const unsafe=structuredClone(imported);
 unsafe.contact.whatsapp.enabled=true;
