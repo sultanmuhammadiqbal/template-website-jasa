@@ -1,10 +1,10 @@
 {
   "name": "template-website-jasa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "npm run build && python3 -m http.server 4173 --directory dist",
-    "test": "node scripts/check-site.mjs && node scripts/test-menu.mjs && node scripts/test-stage2.mjs && node scripts/test-production.mjs && node scripts/test-template.mjs",
+    "test": "node scripts/check-site.mjs && node scripts/test-menu.mjs && node scripts/test-stage2.mjs && node scripts/test-production.mjs && node scripts/test-template.mjs && node tests/site-config-import.test.mjs",
     "build": "node scripts/build-site.mjs",
     "package": "python3 scripts/package-template.py",
     "test:package": "python3 scripts/test-package.py"
